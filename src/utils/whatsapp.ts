@@ -68,7 +68,10 @@ export function generateWhatsAppOrderList(
 }
 
 export function getWhatsAppUrl(phone: string, text: string): string {
-  const cleanPhone = phone.replace(/\D/g, '');
+  let cleanPhone = phone.replace(/\D/g, '');
+  if (cleanPhone.length === 10 || cleanPhone.length === 11) {
+    cleanPhone = `55${cleanPhone}`;
+  }
   const encodedText = encodeURIComponent(text);
   return `https://wa.me/${cleanPhone}?text=${encodedText}`;
 }
@@ -79,7 +82,7 @@ const APP_SETTINGS_STORAGE_KEY = 'pedidos_impressao_settings_v2';
 
 export const DEFAULT_APP_SETTINGS: AppSettings = {
   companyName: 'Hortifruti & Distribuidora de Produtos',
-  whatsappNumber: '5511999998888',
+  whatsappNumber: '5549999501606',
   headerSubtitle: 'Montador de Lista para Separação e Impressão',
   printInstructions: 'Verifique os itens colhidos na lista e marque a caixa ao separar.',
 };
@@ -87,7 +90,13 @@ export const DEFAULT_APP_SETTINGS: AppSettings = {
 export function getStoredAppSettings(): AppSettings {
   try {
     const saved = localStorage.getItem(APP_SETTINGS_STORAGE_KEY);
-    if (saved) return { ...DEFAULT_APP_SETTINGS, ...JSON.parse(saved) };
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed.whatsappNumber === '5511999998888' || parsed.whatsappNumber === '5549998043552' || !parsed.whatsappNumber) {
+        parsed.whatsappNumber = '5549999501606';
+      }
+      return { ...DEFAULT_APP_SETTINGS, ...parsed };
+    }
   } catch (e) {
     console.error('Error reading settings:', e);
   }

@@ -1,20 +1,14 @@
 import React from 'react';
 import { 
   Printer, 
-  Send, 
   Trash2, 
   Plus, 
   Minus, 
   FileText, 
-  User, 
-  Phone, 
-  MapPin, 
-  Calendar, 
-  MessageSquare,
-  Sparkles
+  User
 } from 'lucide-react';
 import { CustomerDetails, OrderListItem, AppSettings } from '../types';
-import { formatQuantityStr, generateWhatsAppOrderList, getWhatsAppUrl } from '../utils/whatsapp';
+import { formatQuantityStr } from '../utils/whatsapp';
 
 interface OrderListSidebarProps {
   items: OrderListItem[];
@@ -37,11 +31,6 @@ export const OrderListSidebar: React.FC<OrderListSidebarProps> = ({
   onClearList,
   onOpenPrintModal,
 }) => {
-  const handleSendWhatsApp = () => {
-    const text = generateWhatsAppOrderList(customerDetails, items, appSettings.companyName);
-    const url = getWhatsAppUrl(appSettings.whatsappNumber, text);
-    window.open(url, '_blank');
-  };
 
   return (
     <div className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden flex flex-col justify-between print:hidden">
@@ -202,21 +191,13 @@ export const OrderListSidebar: React.FC<OrderListSidebarProps> = ({
 
       {/* Actions Footer */}
       {items.length > 0 && (
-        <div className="p-4 bg-slate-50 border-t border-slate-200 space-y-2">
+        <div className="p-4 bg-slate-50 border-t border-slate-200">
           <button
             onClick={onOpenPrintModal}
-            className="w-full py-3 px-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm shadow-md transition flex items-center justify-center gap-2 active:scale-98"
+            className="w-full py-3.5 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-md transition flex items-center justify-center gap-2 active:scale-98"
           >
             <Printer className="w-5 h-5" />
-            <span>IMPRIMIR FICHA DE PEDIDO 🖨️</span>
-          </button>
-
-          <button
-            onClick={handleSendWhatsApp}
-            className="w-full py-3 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-md transition flex items-center justify-center gap-2 active:scale-98"
-          >
-            <Send className="w-5 h-5" />
-            <span>Enviar Lista via WhatsApp 📲</span>
+            <span>GERAR PDF / IMPRIMIR FICHA 📄</span>
           </button>
         </div>
       )}

@@ -1,1 +1,68 @@
 @import "tailwindcss";
+
+/* Compact printing list styles - font-size 12px & hex colors */
+.printable-sheet {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+.printable-sheet table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.printable-sheet th,
+.printable-sheet td {
+  padding: 1px 4px;
+  font-size: 12px;
+  line-height: 1.1;
+  border-color: #cbd5e1;
+}
+
+.printable-sheet th {
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+@media print {
+  @page {
+    margin: 6mm;
+    size: portrait;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Compact printing list styles - font-size 12px */
+  .printable-sheet {
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+  }
+
+  .printable-sheet table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 12px !important;
+  }
+
+  .printable-sheet th,
+  .printable-sheet td {
+    padding: 1px 4px !important;
+    font-size: 12px !important;
+    line-height: 1.1 !important;
+  }
+
+  .printable-sheet th {
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
