@@ -33,7 +33,13 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
       setIsGeneratingPdf(true);
       setPdfMessage(null);
 
-      const result = await shareOrDownloadPDF('printable-order-sheet', 'Lista_de_Pedido.pdf');
+      const result = await shareOrDownloadPDF(
+        'printable-order-sheet',
+        customerDetails,
+        items,
+        appSettings.companyName,
+        'Lista_de_Pedido.pdf'
+      );
 
       if (result.downloaded) {
         setPdfMessage('PDF baixado no dispositivo! Abrindo o WhatsApp...');
@@ -119,12 +125,13 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
           {/* Top Bar with Total Count */}
           <div className="border-b-2 border-slate-900 pb-1.5 mb-2 flex items-center justify-between gap-3">
             <h2 className="text-[14px] font-black uppercase tracking-tight text-slate-900">
-              LISTA DE PEDIDO
+              LISTA DE PEDIDO {appSettings.companyName ? `— ${appSettings.companyName}` : ''}
             </h2>
             <div className="text-right text-[12px] font-black text-slate-900 uppercase">
               Total: {items.length} {items.length === 1 ? 'item' : 'itens'}
             </div>
           </div>
+
 
           {/* Items Table for Separator / Picker */}
           <div className="mb-3">

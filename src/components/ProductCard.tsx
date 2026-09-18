@@ -6,7 +6,7 @@ import { formatQuantityStr } from '../utils/whatsapp';
 interface ProductCardProps {
   product: Product;
   listItem?: OrderListItem;
-  onUpdateQuantity: (product: Product, quantity: number, note?: string) => void;
+  onUpdateQuantity: (product: Product, quantity: number, unit?: string, note?: string) => void;
   onUpdateNote: (product: Product, note: string) => void;
 }
 
@@ -17,18 +17,39 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onUpdateNote,
 }) => {
   const currentQty = typeof listItem?.quantity === 'number' ? listItem.quantity : 0;
+  const [selectedUnit, setSelectedUnit] = useState<string>(product.unit || 'kg');
   const [showNoteInput, setShowNoteInput] = useState(false);
 
+  // Active unit preference (listItem unit > selectedUnit state > product default)
+  const activeUnit = listItem?.unit || selectedUnit;
+
+  // Available units for selection: kg & unid (and product default unit if different)
+  const availableUnits: string[] = ['kg', 'unid'];
+  if (product.unit && !availableUnits.includes(product.unit)) {
+    availableUnits.push(product.unit);
+  }
+
+  const isKg = activeUnit === 'kg';
+  const step = isKg ? 0.5 : 1;
+  const minQty = isKg ? 0.5 : 1;
+
+  const handleUnitChange = (newUnit: string) => {
+    setSelectedUnit(newUnit);
+    if (currentQty > 0) {
+      onUpdateQuantity(product, currentQty, newUnit, listItem?.note);
+    }
+  };
+
   const handleDecrease = () => {
-    const newQty = Math.max(0, currentQty - product.step);
+    const newQty = Math.max(0, currentQty - step);
     const rounded = Math.round(newQty * 100) / 100;
-    onUpdateQuantity(product, rounded < product.minQty ? 0 : rounded);
+    onUpdateQuantity(product, rounded < minQty ? 0 : rounded, activeUnit, listItem?.note);
   };
 
   const handleIncrease = () => {
-    const newQty = currentQty === 0 ? product.minQty : currentQty + product.step;
+    const newQty = currentQty === 0 ? minQty : currentQty + step;
     const rounded = Math.round(newQty * 100) / 100;
-    onUpdateQuantity(product, rounded);
+    onUpdateQuantity(product, rounded, activeUnit, listItem?.note);
   };
 
   return (
@@ -40,14 +61,32 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       }`}
     >
       <div>
-        {/* Top Icon & Category Badge */}
+        {/* Top Icon & Unit Selector Toggle (kg / un) */}
         <div className="flex items-start justify-between gap-2 mb-2">
           <span className="text-3xl p-2 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
             {product.icon || '📦'}
           </span>
-          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
-            {product.unit}
-          </span>
+          
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 shadow-2xs">
+            {availableUnits.map((u) => {
+              const isActive = activeUnit === u;
+              return (
+                <button
+                  key={u}
+                  type="button"
+                  onClick={() => handleUnitChange(u)}
+                  className={`px-2 py-0.5 rounded-lg text-[10px] font-extrabold uppercase transition ${
+                    isActive
+                      ? 'bg-slate-900 text-white shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/70'
+                  }`}
+                  title={`Alternar para ${u}`}
+                >
+                  {u === 'unid' ? 'un' : u}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Product Name */}
@@ -96,7 +135,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </button>
 
             <span className="text-xs font-black text-emerald-950 px-2">
-              {formatQuantityStr(currentQty, product.unit)}
+              {formatQuantityStr(currentQty, activeUnit)}
             </span>
 
             <button

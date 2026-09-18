@@ -27,39 +27,99 @@
 
 @media print {
   @page {
-    margin: 6mm;
+    margin: 8mm;
     size: portrait;
   }
 
-  body {
+  html, body {
     background: #ffffff !important;
-    color: #000000 !important;
+    color: #0f172a !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  /* Compact printing list styles - font-size 12px */
-  .printable-sheet {
+  /* CRITICAL: Hide all main application layout containers from document flow */
+  header,
+  nav,
+  main,
+  footer,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Remove fixed overlays, modals backgrounds & borders */
+  .fixed,
+  .absolute {
+    position: static !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
     padding: 0 !important;
     margin: 0 !important;
-    font-size: 12px !important;
+    max-height: none !important;
+    height: auto !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    overflow: visible !important;
+  }
+
+  /* Reset modal card wrapper */
+  .max-w-3xl,
+  .max-h-\[92vh\],
+  .rounded-3xl,
+  .shadow-2xl {
+    max-width: 100% !important;
+    max-height: none !important;
+    height: auto !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+  }
+
+  /* Show ONLY the printable order sheet and set compact print dimensions */
+  #printable-order-sheet {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+    font-size: 11px !important;
     line-height: 1.2 !important;
   }
 
-  .printable-sheet table {
+  #printable-order-sheet table {
     width: 100% !important;
     border-collapse: collapse !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
+    page-break-inside: auto !important;
   }
 
-  .printable-sheet th,
-  .printable-sheet td {
-    padding: 1px 4px !important;
-    font-size: 12px !important;
-    line-height: 1.1 !important;
+  #printable-order-sheet tr {
+    page-break-inside: avoid !important;
   }
 
-  .printable-sheet th {
+  #printable-order-sheet th,
+  #printable-order-sheet td {
+    padding: 3px 6px !important;
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    border: 1px solid #94a3b8 !important;
+  }
+
+  #printable-order-sheet th {
     background-color: #0f172a !important;
     color: #ffffff !important;
     -webkit-print-color-adjust: exact !important;

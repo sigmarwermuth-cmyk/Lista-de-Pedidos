@@ -57,7 +57,8 @@ export default function App() {
   };
 
   // --- ITEM HANDLERS ---
-  const handleUpdateProductQuantity = (product: Product, quantity: number, note?: string) => {
+  const handleUpdateProductQuantity = (product: Product, quantity: number, unit?: string, note?: string) => {
+    const chosenUnit = unit || product.unit || 'kg';
     setOrderListItems((prev) => {
       const idx = prev.findIndex((item) => item.id === product.id);
       if (quantity <= 0) {
@@ -71,7 +72,12 @@ export default function App() {
 
       if (idx > -1) {
         const next = [...prev];
-        next[idx] = { ...next[idx], quantity, note: note ?? next[idx].note };
+        next[idx] = { 
+          ...next[idx], 
+          quantity, 
+          unit: chosenUnit, 
+          note: note !== undefined ? note : next[idx].note 
+        };
         return next;
       } else {
         return [
@@ -81,11 +87,22 @@ export default function App() {
             name: product.name,
             category: product.category,
             quantity,
-            unit: product.unit,
+            unit: chosenUnit,
             note,
           },
         ];
       }
+    });
+  };
+
+  const handleUpdateUnitById = (id: string, newUnit: string) => {
+    setOrderListItems((prev) => {
+      return prev.map((item) => {
+        if (item.id === id) {
+          return { ...item, unit: newUnit };
+        }
+        return item;
+      });
     });
   };
 
@@ -266,6 +283,7 @@ export default function App() {
               setCustomerDetails={setCustomerDetails}
               appSettings={appSettings}
               onUpdateQuantity={handleUpdateQuantityById}
+              onUpdateUnit={handleUpdateUnitById}
               onRemoveItem={handleRemoveItemById}
               onClearList={handleClearList}
               onOpenPrintModal={handleOpenPrintModal}

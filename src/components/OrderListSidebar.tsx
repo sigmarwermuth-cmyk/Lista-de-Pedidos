@@ -16,6 +16,7 @@ interface OrderListSidebarProps {
   setCustomerDetails: (details: CustomerDetails) => void;
   appSettings: AppSettings;
   onUpdateQuantity: (id: string, delta: number) => void;
+  onUpdateUnit?: (id: string, newUnit: string) => void;
   onRemoveItem: (id: string) => void;
   onClearList: () => void;
   onOpenPrintModal: () => void;
@@ -27,6 +28,7 @@ export const OrderListSidebar: React.FC<OrderListSidebarProps> = ({
   setCustomerDetails,
   appSettings,
   onUpdateQuantity,
+  onUpdateUnit,
   onRemoveItem,
   onClearList,
   onOpenPrintModal,
@@ -139,7 +141,7 @@ export const OrderListSidebar: React.FC<OrderListSidebarProps> = ({
                   className="bg-white rounded-xl p-3 border border-slate-200 shadow-2xs flex items-center justify-between gap-2"
                 >
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1.5 flex-wrap">
                       <span className="font-extrabold text-xs text-slate-900">
                         {idx + 1}. {item.name}
                       </span>
@@ -149,8 +151,35 @@ export const OrderListSidebar: React.FC<OrderListSidebarProps> = ({
                         </span>
                       )}
                     </div>
+                    
+                    {/* Unit Switcher (kg / un) */}
+                    <div className="flex items-center gap-1 mt-1">
+                      <div className="inline-flex items-center gap-0.5 bg-slate-100 p-0.5 rounded-lg border border-slate-200">
+                        <button
+                          type="button"
+                          onClick={() => onUpdateUnit && onUpdateUnit(item.id, 'kg')}
+                          className={`px-1.5 py-0.2 rounded text-[9px] font-extrabold uppercase transition ${
+                            item.unit === 'kg' ? 'bg-slate-900 text-white' : 'text-slate-500 hover:text-slate-900'
+                          }`}
+                          title="Unidade kg"
+                        >
+                          kg
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => onUpdateUnit && onUpdateUnit(item.id, 'unid')}
+                          className={`px-1.5 py-0.2 rounded text-[9px] font-extrabold uppercase transition ${
+                            item.unit === 'unid' ? 'bg-slate-900 text-white' : 'text-slate-500 hover:text-slate-900'
+                          }`}
+                          title="Unidade un"
+                        >
+                          un
+                        </button>
+                      </div>
+                    </div>
+
                     {item.note && (
-                      <span className="text-[11px] text-slate-500 block truncate italic">
+                      <span className="text-[11px] text-slate-500 block truncate italic mt-0.5">
                         Obs: "{item.note}"
                       </span>
                     )}
