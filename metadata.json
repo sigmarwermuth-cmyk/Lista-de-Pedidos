@@ -1,0 +1,6 @@
+{
+  "name": "Lista de Pedidos para Impressão",
+  "description": "Sistema para montagem de lista de produtos de hortifruti e mercado para envio e impressão.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

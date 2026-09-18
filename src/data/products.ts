@@ -1,0 +1,95 @@
+import { Product } from '../types';
+
+export const CATALOG_PRODUCTS: Product[] = [
+  // --- FRUTAS ---
+  { id: 'f1', name: 'Banana Prata', category: 'frutas', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🍌' },
+  { id: 'f2', name: 'Banana Caturra / Nanica', category: 'frutas', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🍌' },
+  { id: 'f3', name: 'Maçã Gala', category: 'frutas', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🍎' },
+  { id: 'f4', name: 'Maçã Fuji', category: 'frutas', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🍎' },
+  { id: 'f5', name: 'Mamão Formosa', category: 'frutas', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🥭' },
+  { id: 'f6', name: 'Mamão Papaia', category: 'frutas', unit: 'unid', step: 1, minQty: 1, icon: '🥭' },
+  { id: 'f7', name: 'Laranja Pera', category: 'frutas', unit: 'kg', step: 1.0, minQty: 1.0, icon: '🍊' },
+  { id: 'f8', name: 'Limão Taiti', category: 'frutas', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🍋' },
+  { id: 'f9', name: 'Abacaxi Pérola', category: 'frutas', unit: 'unid', step: 1, minQty: 1, icon: '🍍' },
+  { id: 'f10', name: 'Melancia Inteira', category: 'frutas', unit: 'unid', step: 1, minQty: 1, icon: '🍉' },
+  { id: 'f11', name: 'Melão Amarelo', category: 'frutas', unit: 'unid', step: 1, minQty: 1, icon: '🍈' },
+  { id: 'f12', name: 'Morangos (Bandeja)', category: 'frutas', unit: 'pct', step: 1, minQty: 1, icon: '🍓' },
+  { id: 'f13', name: 'Uva Niágara', category: 'frutas', unit: 'pct', step: 1, minQty: 1, icon: '🍇' },
+  { id: 'f14', name: 'Uva Sem Semente', category: 'frutas', unit: 'pct', step: 1, minQty: 1, icon: '🍇' },
+  { id: 'f15', name: 'Manga Palmer', category: 'frutas', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🥭' },
+  { id: 'f16', name: 'Maracujá Azedo', category: 'frutas', unit: 'kg', step: 0.5, minQty: 0.5, icon: '💛' },
+  { id: 'f17', name: 'Pera Willians', category: 'frutas', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🍐' },
+  { id: 'f18', name: 'Abacate', category: 'frutas', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🥑' },
+
+  // --- VERDURAS ---
+  { id: 'v1', name: 'Alface Crespa', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🥬' },
+  { id: 'v2', name: 'Alface Lisa', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🥬' },
+  { id: 'v3', name: 'Alface Americana', category: 'verduras', unit: 'unid', step: 1, minQty: 1, icon: '🥬' },
+  { id: 'v4', name: 'Rúcula', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🌿' },
+  { id: 'v5', name: 'Agrião', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🌿' },
+  { id: 'v6', name: 'Couve Manteiga', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🥬' },
+  { id: 'v7', name: 'Cheiro Verde (Salsa e Cebolinha)', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🌱' },
+  { id: 'v8', name: 'Espinafre', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🍃' },
+  { id: 'v9', name: 'Brócolis Ninja', category: 'verduras', unit: 'unid', step: 1, minQty: 1, icon: '🥦' },
+  { id: 'v10', name: 'Couve-Flor', category: 'verduras', unit: 'unid', step: 1, minQty: 1, icon: '🥦' },
+  { id: 'v11', name: 'Repolho Verde', category: 'verduras', unit: 'unid', step: 1, minQty: 1, icon: '🥬' },
+  { id: 'v12', name: 'Repolho Roxo', category: 'verduras', unit: 'unid', step: 1, minQty: 1, icon: '🟣' },
+
+  // --- LEGUMES ---
+  { id: 'l1', name: 'Tomate Italiano', category: 'legumes', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🍅' },
+  { id: 'l2', name: 'Tomate Andréa / Salada', category: 'legumes', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🍅' },
+  { id: 'l3', name: 'Tomate Cereja (Bandeja)', category: 'legumes', unit: 'pct', step: 1, minQty: 1, icon: '🍅' },
+  { id: 'l4', name: 'Batata Monalisa / Inglesa', category: 'legumes', unit: 'kg', step: 1.0, minQty: 1.0, icon: '🥔' },
+  { id: 'l5', name: 'Batata Doce', category: 'legumes', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🍠' },
+  { id: 'l6', name: 'Cenoura', category: 'legumes', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🥕' },
+  { id: 'l7', name: 'Cebola Branca', category: 'legumes', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🧅' },
+  { id: 'l8', name: 'Cebola Roxa', category: 'legumes', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🧅' },
+  { id: 'l9', name: 'Alho Roxo', category: 'legumes', unit: 'kg', step: 0.1, minQty: 0.1, icon: '🧄' },
+  { id: 'l10', name: 'Abobrinha Italiana', category: 'legumes', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🥒' },
+  { id: 'l11', name: 'Pepino Japonês', category: 'legumes', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🥒' },
+  { id: 'l12', name: 'Chuchu', category: 'legumes', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🟢' },
+  { id: 'l13', name: 'Pimentão Verde', category: 'legumes', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🫑' },
+  { id: 'l14', name: 'Pimentão Vermelho', category: 'legumes', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🫑' },
+  { id: 'l15', name: 'Pimentão Amarelo', category: 'legumes', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🫑' },
+  { id: 'l16', name: 'Beterraba', category: 'legumes', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🔴' },
+
+  // --- LATICÍNIOS & OVOS ---
+  { id: 'lat1', name: 'Ovos Caipiras (Dúzia)', category: 'laticinios', unit: 'dz', step: 1, minQty: 1, icon: '🥚' },
+  { id: 'lat2', name: 'Ovos Brancos (Cartela 30 un)', category: 'laticinios', unit: 'pct', step: 1, minQty: 1, icon: '🥚' },
+  { id: 'lat3', name: 'Leite Integral 1L', category: 'laticinios', unit: 'L', step: 1, minQty: 1, icon: '🥛' },
+  { id: 'lat4', name: 'Queijo Minas Frescal', category: 'laticinios', unit: 'unid', step: 1, minQty: 1, icon: '🧀' },
+  { id: 'lat5', name: 'Queijo Mussarela Fatiado', category: 'laticinios', unit: 'kg', step: 0.2, minQty: 0.2, icon: '🧀' },
+  { id: 'lat6', name: 'Presunto Fatiado', category: 'laticinios', unit: 'kg', step: 0.2, minQty: 0.2, icon: '🥓' },
+  { id: 'lat7', name: 'Manteiga Extra', category: 'laticinios', unit: 'unid', step: 1, minQty: 1, icon: '🧈' },
+
+  // --- AÇOUGUE & CARNES ---
+  { id: 'ac1', name: 'Peito de Frango Sem Osso', category: 'acougue', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🍗' },
+  { id: 'ac2', name: 'Coxa e Sobretoxa de Frango', category: 'acougue', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🍗' },
+  { id: 'ac3', name: 'Contra Filé Bovino', category: 'acougue', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🥩' },
+  { id: 'ac4', name: 'Patinho Bovino (Moído ou Bife)', category: 'acougue', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🥩' },
+  { id: 'ac5', name: 'Alcatra Bovina', category: 'acougue', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🥩' },
+  { id: 'ac6', name: 'Costela Bovina', category: 'acougue', unit: 'kg', step: 1.0, minQty: 1.0, icon: '🥩' },
+  { id: 'ac7', name: 'Bisteca Suína', category: 'acougue', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🥩' },
+  { id: 'ac8', name: 'Linguiça Toscama', category: 'acougue', unit: 'kg', step: 0.5, minQty: 0.5, icon: '🌭' },
+
+  // --- MERCEARIA ---
+  { id: 'm1', name: 'Arroz Branco (5kg)', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🌾' },
+  { id: 'm2', name: 'Feijão Carioca (1kg)', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🫘' },
+  { id: 'm3', name: 'Açúcar Refinado (1kg)', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🍬' },
+  { id: 'm4', name: 'Café Torrado e Moído (500g)', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '☕' },
+  { id: 'm5', name: 'Óleo de Soja (900ml)', category: 'mercearia', unit: 'unid', step: 1, minQty: 1, icon: '🧴' },
+  { id: 'm6', name: 'Azeite de Oliva (500ml)', category: 'mercearia', unit: 'unid', step: 1, minQty: 1, icon: '🫒' },
+  { id: 'm7', name: 'Farinha de Trigo (1kg)', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🌾' },
+  { id: 'm8', name: 'Macarrão Espaguete (500g)', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🍝' },
+
+  // --- BEBIDAS ---
+  { id: 'b1', name: 'Suco de Laranja Integral 1L', category: 'bebidas', unit: 'unid', step: 1, minQty: 1, icon: '🥤' },
+  { id: 'b2', name: 'Água Mineral Sem Gás 1.5L', category: 'bebidas', unit: 'unid', step: 1, minQty: 1, icon: '💧' },
+  { id: 'b3', name: 'Água com Gás 1.5L', category: 'bebidas', unit: 'unid', step: 1, minQty: 1, icon: '🫧' },
+
+  // --- LIMPEZA ---
+  { id: 'lim1', name: 'Detergente Líquido (500ml)', category: 'limpeza', unit: 'unid', step: 1, minQty: 1, icon: '🧼' },
+  { id: 'lim2', name: 'Sabão em Pó (1kg)', category: 'limpeza', unit: 'pct', step: 1, minQty: 1, icon: '🧼' },
+  { id: 'lim3', name: 'Água Sanitária (2L)', category: 'limpeza', unit: 'unid', step: 1, minQty: 1, icon: '🧴' },
+  { id: 'lim4', name: 'Papel Higiênico (Pacote c/ 12)', category: 'limpeza', unit: 'pct', step: 1, minQty: 1, icon: '🧻' },
+];
