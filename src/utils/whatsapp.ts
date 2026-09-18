@@ -25,7 +25,7 @@ export function generateWhatsAppOrderList(
 ): string {
   const lines: string[] = [];
 
-  lines.push(`📝 *LISTA DE PEDIDO DE PRODUTOS*`);
+  lines.push(`📝 *LISTA DE PEDIDOS*`);
   if (companyName) {
     lines.push(`🏢 *Para:* ${companyName.toUpperCase()}`);
   }
@@ -76,11 +76,17 @@ export function getWhatsAppUrl(phone: string, text: string): string {
   return `https://wa.me/${cleanPhone}?text=${encodedText}`;
 }
 
+import { getIndexedDB, setIndexedDB } from './indexedDBStorage';
+
 // Storage helpers
 const ORDERS_LIST_STORAGE_KEY = 'pedidos_impressao_lists_v2';
 const APP_SETTINGS_STORAGE_KEY = 'pedidos_impressao_settings_v2';
 const DRAFT_ITEMS_STORAGE_KEY = 'pedidos_impressao_draft_items_v2';
 const DRAFT_CUSTOMER_STORAGE_KEY = 'pedidos_impressao_draft_customer_v2';
+
+export async function getStoredDraftItemsAsync(): Promise<OrderListItem[]> {
+  return await getIndexedDB<OrderListItem[]>(DRAFT_ITEMS_STORAGE_KEY, []);
+}
 
 export function getStoredDraftItems(): OrderListItem[] {
   try {
@@ -93,11 +99,19 @@ export function getStoredDraftItems(): OrderListItem[] {
 }
 
 export function saveDraftItems(items: OrderListItem[]): void {
-  try {
-    localStorage.setItem(DRAFT_ITEMS_STORAGE_KEY, JSON.stringify(items));
-  } catch (e) {
-    console.error('Error saving draft items:', e);
-  }
+  setIndexedDB(DRAFT_ITEMS_STORAGE_KEY, items);
+}
+
+export async function getStoredDraftCustomerAsync(): Promise<CustomerDetails> {
+  const defaultCustomer: CustomerDetails = {
+    name: '',
+    phone: '',
+    deliveryType: 'delivery',
+    address: '',
+    deliveryDate: '',
+    generalNotes: '',
+  };
+  return await getIndexedDB<CustomerDetails>(DRAFT_CUSTOMER_STORAGE_KEY, defaultCustomer);
 }
 
 export function getStoredDraftCustomer(): CustomerDetails {
@@ -118,11 +132,7 @@ export function getStoredDraftCustomer(): CustomerDetails {
 }
 
 export function saveDraftCustomer(customer: CustomerDetails): void {
-  try {
-    localStorage.setItem(DRAFT_CUSTOMER_STORAGE_KEY, JSON.stringify(customer));
-  } catch (e) {
-    console.error('Error saving draft customer:', e);
-  }
+  setIndexedDB(DRAFT_CUSTOMER_STORAGE_KEY, customer);
 }
 
 export const DEFAULT_APP_SETTINGS: AppSettings = {
@@ -131,6 +141,14 @@ export const DEFAULT_APP_SETTINGS: AppSettings = {
   headerSubtitle: 'Montador de Lista para Separação e Impressão',
   printInstructions: 'Verifique os itens colhidos na lista e marque a caixa ao separar.',
 };
+
+export async function getStoredAppSettingsAsync(): Promise<AppSettings> {
+  const parsed = await getIndexedDB<AppSettings>(APP_SETTINGS_STORAGE_KEY, DEFAULT_APP_SETTINGS);
+  if (parsed.whatsappNumber === '5511999998888' || parsed.whatsappNumber === '5549998043552' || !parsed.whatsappNumber) {
+    parsed.whatsappNumber = '5549999501606';
+  }
+  return { ...DEFAULT_APP_SETTINGS, ...parsed };
+}
 
 export function getStoredAppSettings(): AppSettings {
   try {
@@ -149,11 +167,11 @@ export function getStoredAppSettings(): AppSettings {
 }
 
 export function saveAppSettings(settings: AppSettings): void {
-  try {
-    localStorage.setItem(APP_SETTINGS_STORAGE_KEY, JSON.stringify(settings));
-  } catch (e) {
-    console.error('Error saving settings:', e);
-  }
+  setIndexedDB(APP_SETTINGS_STORAGE_KEY, settings);
+}
+
+export async function getStoredOrderListsAsync(): Promise<SavedOrderList[]> {
+  return await getIndexedDB<SavedOrderList[]>(ORDERS_LIST_STORAGE_KEY, []);
 }
 
 export function getStoredOrderLists(): SavedOrderList[] {
@@ -170,8 +188,9 @@ export function saveOrderListToHistory(orderList: SavedOrderList): void {
   try {
     const current = getStoredOrderLists();
     const updated = [orderList, ...current].slice(0, 50);
-    localStorage.setItem(ORDERS_LIST_STORAGE_KEY, JSON.stringify(updated));
+    setIndexedDB(ORDERS_LIST_STORAGE_KEY, updated);
   } catch (e) {
     console.error('Error saving order list history:', e);
   }
 }
+

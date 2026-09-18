@@ -124,8 +124,8 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
         >
           {/* Top Bar with Total Count */}
           <div className="border-b-2 border-slate-900 pb-1.5 mb-2 flex items-center justify-between gap-3">
-            <h2 className="text-[14px] font-black uppercase tracking-tight text-slate-900">
-              LISTA DE PEDIDO {appSettings.companyName ? `— ${appSettings.companyName}` : ''}
+            <h2 className="text-[14px] font-black tracking-tight text-slate-900">
+              Lista de Pedidos
             </h2>
             <div className="text-right text-[12px] font-black text-slate-900 uppercase">
               Total: {items.length} {items.length === 1 ? 'item' : 'itens'}

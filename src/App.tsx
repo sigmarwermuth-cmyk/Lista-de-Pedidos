@@ -6,10 +6,10 @@ import { CustomItemForm } from './components/CustomItemForm';
 import { OrderListSidebar } from './components/OrderListSidebar';
 import { PrintOrderModal } from './components/PrintOrderModal';
 import { HistoryModal } from './components/HistoryModal';
+import { ProductManagerModal } from './components/ProductManagerModal';
 import { PWAInstallButton } from './components/PWAInstallButton';
 import { OfflineIndicator } from './components/OfflineIndicator';
 
-import { CATALOG_PRODUCTS } from './data/products';
 import { 
   AppSettings, 
   CustomerDetails, 
@@ -25,25 +25,61 @@ import {
   getStoredDraftItems,
   saveDraftItems,
   getStoredDraftCustomer,
-  saveDraftCustomer
+  saveDraftCustomer,
+  getStoredDraftItemsAsync,
+  getStoredDraftCustomerAsync,
+  getStoredOrderListsAsync
 } from './utils/whatsapp';
+import {
+  getStoredProducts,
+  saveStoredProducts,
+  resetStoredProducts,
+  loadStoredProductsAsync
+} from './utils/productsStorage';
 import { Sparkles, Printer, FileText } from 'lucide-react';
 
 export default function App() {
   // --- STATE WITH PERSISTENCE ---
   const [appSettings, setAppSettings] = useState<AppSettings>(getStoredAppSettings());
+  const [products, setProducts] = useState<Product[]>(() => getStoredProducts());
   const [orderListItems, setOrderListItems] = useState<OrderListItem[]>(() => getStoredDraftItems());
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory>('todos');
   const [searchTerm, setSearchTerm] = useState('');
 
   const [customerDetails, setCustomerDetails] = useState<CustomerDetails>(() => getStoredDraftCustomer());
 
-  // Auto-save active order items to localStorage on change
+  // Async Hydration from IndexedDB on initial mount
+  useEffect(() => {
+    let isMounted = true;
+    async function hydrateFromIndexedDB() {
+      try {
+        const [idbProducts, idbItems, idbCustomer, idbHistory] = await Promise.all([
+          loadStoredProductsAsync(),
+          getStoredDraftItemsAsync(),
+          getStoredDraftCustomerAsync(),
+          getStoredOrderListsAsync(),
+        ]);
+
+        if (isMounted) {
+          if (idbProducts && idbProducts.length > 0) setProducts(idbProducts);
+          if (idbItems && idbItems.length > 0) setOrderListItems(idbItems);
+          if (idbCustomer && (idbCustomer.name || idbCustomer.address)) setCustomerDetails(idbCustomer);
+          if (idbHistory && idbHistory.length > 0) setSavedListsHistory(idbHistory);
+        }
+      } catch (e) {
+        console.error('Error hydrating from IndexedDB:', e);
+      }
+    }
+    hydrateFromIndexedDB();
+    return () => { isMounted = false; };
+  }, []);
+
+  // Auto-save active order items on change
   useEffect(() => {
     saveDraftItems(orderListItems);
   }, [orderListItems]);
 
-  // Auto-save active customer details to localStorage on change
+  // Auto-save active customer details on change
   useEffect(() => {
     saveDraftCustomer(customerDetails);
   }, [customerDetails]);
@@ -51,6 +87,7 @@ export default function App() {
   // Modals state
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isProductManagerOpen, setIsProductManagerOpen] = useState(false);
   const [savedListsHistory, setSavedListsHistory] = useState<SavedOrderList[]>(getStoredOrderLists());
 
   // Toast
@@ -59,6 +96,41 @@ export default function App() {
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 2500);
+  };
+
+  // --- PRODUCT MANAGEMENT HANDLERS ---
+  const handleAddProduct = (newProduct: Omit<Product, 'id'>) => {
+    const createdProduct: Product = {
+      ...newProduct,
+      id: `prod_custom_${Date.now()}`,
+    };
+    const nextProducts = [createdProduct, ...products];
+    setProducts(nextProducts);
+    saveStoredProducts(nextProducts);
+    showToast(`Produto "${createdProduct.name}" cadastrado com sucesso! 🎉`);
+  };
+
+  const handleUpdateProduct = (updatedProduct: Product) => {
+    const nextProducts = products.map((p) => (p.id === updatedProduct.id ? updatedProduct : p));
+    setProducts(nextProducts);
+    saveStoredProducts(nextProducts);
+    showToast(`Produto "${updatedProduct.name}" atualizado com sucesso! ✏️`);
+  };
+
+  const handleDeleteProduct = (productId: string) => {
+    const prod = products.find((p) => p.id === productId);
+    const nextProducts = products.filter((p) => p.id !== productId);
+    setProducts(nextProducts);
+    saveStoredProducts(nextProducts);
+    if (prod) {
+      showToast(`Produto "${prod.name}" removido!`);
+    }
+  };
+
+  const handleResetProducts = () => {
+    const defaultProducts = resetStoredProducts();
+    setProducts(defaultProducts);
+    showToast('Catálogo de produtos padrão restaurado com sucesso!');
   };
 
   // --- ITEM HANDLERS ---
@@ -171,7 +243,7 @@ export default function App() {
 
   // --- FILTERED PRODUCTS ---
   const filteredProducts = useMemo(() => {
-    return CATALOG_PRODUCTS.filter((prod) => {
+    return products.filter((prod) => {
       const matchesSearch =
         searchTerm === '' ||
         prod.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -182,12 +254,12 @@ export default function App() {
 
       return matchesSearch && matchesCat;
     });
-  }, [selectedCategory, searchTerm]);
+  }, [products, selectedCategory, searchTerm]);
 
   // Counts map
   const categoryCounts = useMemo(() => {
     const map: Record<ProductCategory, number> = {
-      todos: CATALOG_PRODUCTS.length,
+      todos: products.length,
       frutas: 0,
       verduras: 0,
       legumes: 0,
@@ -197,13 +269,13 @@ export default function App() {
       mercearia: 0,
       limpeza: 0,
     };
-    CATALOG_PRODUCTS.forEach((p) => {
+    products.forEach((p) => {
       if (map[p.category] !== undefined) {
         map[p.category] += 1;
       }
     });
     return map;
-  }, []);
+  }, [products]);
 
   return (
     <div className="min-h-screen bg-slate-100 font-sans text-slate-900 flex flex-col selection:bg-slate-900 selection:text-white">
@@ -223,6 +295,7 @@ export default function App() {
         setSearchTerm={setSearchTerm}
         onOpenPrint={handleOpenPrintModal}
         onOpenHistory={() => setIsHistoryOpen(true)}
+        onOpenProductManager={() => setIsProductManagerOpen(true)}
         onClearList={handleClearList}
       />
 
@@ -259,7 +332,7 @@ export default function App() {
             {filteredProducts.length === 0 ? (
               <div className="bg-white rounded-3xl p-10 text-center border border-slate-200 text-slate-500 space-y-2">
                 <p className="font-bold">Nenhum produto encontrado na busca "{searchTerm}".</p>
-                <p className="text-xs">Você pode usar o campo de item personalizado acima para inserir qualquer produto manualmente!</p>
+                <p className="text-xs">Você pode cadastrar novos produtos no botão "Produtos" no menu superior!</p>
               </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
@@ -342,6 +415,16 @@ export default function App() {
         lists={savedListsHistory}
         onClose={() => setIsHistoryOpen(false)}
         onLoadList={handleLoadSavedList}
+      />
+
+      <ProductManagerModal
+        isOpen={isProductManagerOpen}
+        products={products}
+        onClose={() => setIsProductManagerOpen(false)}
+        onAddProduct={handleAddProduct}
+        onUpdateProduct={handleUpdateProduct}
+        onDeleteProduct={handleDeleteProduct}
+        onResetProducts={handleResetProducts}
       />
 
       <OfflineIndicator />

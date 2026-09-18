@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Printer, History, X } from 'lucide-react';
+import { Search, Printer, History, PackagePlus, X } from 'lucide-react';
 import { AppSettings } from '../types';
 import { PWAInstallButton } from './PWAInstallButton';
 
@@ -10,6 +10,7 @@ interface HeaderProps {
   setSearchTerm: (term: string) => void;
   onOpenPrint: () => void;
   onOpenHistory: () => void;
+  onOpenProductManager: () => void;
   onClearList: () => void;
 }
 
@@ -20,6 +21,7 @@ export const Header: React.FC<HeaderProps> = ({
   setSearchTerm,
   onOpenPrint,
   onOpenHistory,
+  onOpenProductManager,
   onClearList,
 }) => {
   return (
@@ -44,6 +46,14 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Mobile Header Buttons */}
             <div className="flex md:hidden items-center gap-1.5">
+              <button
+                onClick={onOpenProductManager}
+                className="bg-slate-800 text-indigo-400 font-bold p-2 rounded-xl text-xs flex items-center justify-center border border-slate-700"
+                title="Cadastrar e Editar Produtos"
+              >
+                <PackagePlus className="w-4 h-4" />
+              </button>
+
               <PWAInstallButton variant="header" />
 
               <button
@@ -78,6 +88,15 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Desktop Action Buttons */}
           <div className="hidden md:flex items-center gap-2">
+            <button
+              onClick={onOpenProductManager}
+              className="px-3 py-2 text-xs font-semibold text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 transition flex items-center gap-1.5"
+              title="Cadastrar, editar ou remover produtos do catálogo"
+            >
+              <PackagePlus className="w-4 h-4 text-indigo-400" />
+              <span>Produtos</span>
+            </button>
+
             <PWAInstallButton variant="header" />
 
             {listCount > 0 && (
