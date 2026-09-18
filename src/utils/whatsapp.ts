@@ -187,7 +187,7 @@ export function getStoredOrderLists(): SavedOrderList[] {
 export function saveOrderListToHistory(orderList: SavedOrderList): void {
   try {
     const current = getStoredOrderLists();
-    const updated = [orderList, ...current].slice(0, 50);
+    const updated = [orderList, ...current];
     setIndexedDB(ORDERS_LIST_STORAGE_KEY, updated);
   } catch (e) {
     console.error('Error saving order list history:', e);
