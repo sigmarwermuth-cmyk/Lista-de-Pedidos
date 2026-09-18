@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Header } from './components/Header';
 import { CategoryNav } from './components/CategoryNav';
 import { ProductCard } from './components/ProductCard';
@@ -6,7 +6,6 @@ import { CustomItemForm } from './components/CustomItemForm';
 import { OrderListSidebar } from './components/OrderListSidebar';
 import { PrintOrderModal } from './components/PrintOrderModal';
 import { HistoryModal } from './components/HistoryModal';
-import { SettingsModal } from './components/SettingsModal';
 import { PWAInstallButton } from './components/PWAInstallButton';
 import { OfflineIndicator } from './components/OfflineIndicator';
 
@@ -22,30 +21,36 @@ import {
 import { 
   getStoredAppSettings, 
   getStoredOrderLists, 
-  saveOrderListToHistory 
+  saveOrderListToHistory,
+  getStoredDraftItems,
+  saveDraftItems,
+  getStoredDraftCustomer,
+  saveDraftCustomer
 } from './utils/whatsapp';
 import { Sparkles, Printer, FileText } from 'lucide-react';
 
 export default function App() {
-  // --- STATE ---
+  // --- STATE WITH PERSISTENCE ---
   const [appSettings, setAppSettings] = useState<AppSettings>(getStoredAppSettings());
-  const [orderListItems, setOrderListItems] = useState<OrderListItem[]>([]);
+  const [orderListItems, setOrderListItems] = useState<OrderListItem[]>(() => getStoredDraftItems());
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory>('todos');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const [customerDetails, setCustomerDetails] = useState<CustomerDetails>({
-    name: '',
-    phone: '',
-    deliveryType: 'delivery',
-    address: '',
-    deliveryDate: '',
-    generalNotes: '',
-  });
+  const [customerDetails, setCustomerDetails] = useState<CustomerDetails>(() => getStoredDraftCustomer());
+
+  // Auto-save active order items to localStorage on change
+  useEffect(() => {
+    saveDraftItems(orderListItems);
+  }, [orderListItems]);
+
+  // Auto-save active customer details to localStorage on change
+  useEffect(() => {
+    saveDraftCustomer(customerDetails);
+  }, [customerDetails]);
 
   // Modals state
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [savedListsHistory, setSavedListsHistory] = useState<SavedOrderList[]>(getStoredOrderLists());
 
   // Toast
@@ -218,7 +223,6 @@ export default function App() {
         setSearchTerm={setSearchTerm}
         onOpenPrint={handleOpenPrintModal}
         onOpenHistory={() => setIsHistoryOpen(true)}
-        onOpenSettings={() => setIsSettingsOpen(true)}
         onClearList={handleClearList}
       />
 
@@ -338,16 +342,6 @@ export default function App() {
         lists={savedListsHistory}
         onClose={() => setIsHistoryOpen(false)}
         onLoadList={handleLoadSavedList}
-      />
-
-      <SettingsModal
-        isOpen={isSettingsOpen}
-        settings={appSettings}
-        onClose={() => setIsSettingsOpen(false)}
-        onSave={(newSettings) => {
-          setAppSettings(newSettings);
-          showToast('Configurações atualizadas!');
-        }}
       />
 
       <OfflineIndicator />

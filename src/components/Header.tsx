@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Printer, History, Settings, X } from 'lucide-react';
+import { Search, Printer, History, X } from 'lucide-react';
 import { AppSettings } from '../types';
 import { PWAInstallButton } from './PWAInstallButton';
 
@@ -10,7 +10,6 @@ interface HeaderProps {
   setSearchTerm: (term: string) => void;
   onOpenPrint: () => void;
   onOpenHistory: () => void;
-  onOpenSettings: () => void;
   onClearList: () => void;
 }
 
@@ -21,7 +20,6 @@ export const Header: React.FC<HeaderProps> = ({
   setSearchTerm,
   onOpenPrint,
   onOpenHistory,
-  onOpenSettings,
   onClearList,
 }) => {
   return (
@@ -98,14 +96,6 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <History className="w-4 h-4 text-amber-400" />
               <span>Histórico</span>
-            </button>
-
-            <button
-              onClick={onOpenSettings}
-              className="px-3 py-2 text-xs font-semibold text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 transition flex items-center gap-1.5"
-            >
-              <Settings className="w-4 h-4 text-slate-400" />
-              <span>Configurações</span>
             </button>
 
             <button

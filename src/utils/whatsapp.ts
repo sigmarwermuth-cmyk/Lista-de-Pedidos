@@ -79,6 +79,51 @@ export function getWhatsAppUrl(phone: string, text: string): string {
 // Storage helpers
 const ORDERS_LIST_STORAGE_KEY = 'pedidos_impressao_lists_v2';
 const APP_SETTINGS_STORAGE_KEY = 'pedidos_impressao_settings_v2';
+const DRAFT_ITEMS_STORAGE_KEY = 'pedidos_impressao_draft_items_v2';
+const DRAFT_CUSTOMER_STORAGE_KEY = 'pedidos_impressao_draft_customer_v2';
+
+export function getStoredDraftItems(): OrderListItem[] {
+  try {
+    const saved = localStorage.getItem(DRAFT_ITEMS_STORAGE_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch (e) {
+    console.error('Error reading draft items:', e);
+  }
+  return [];
+}
+
+export function saveDraftItems(items: OrderListItem[]): void {
+  try {
+    localStorage.setItem(DRAFT_ITEMS_STORAGE_KEY, JSON.stringify(items));
+  } catch (e) {
+    console.error('Error saving draft items:', e);
+  }
+}
+
+export function getStoredDraftCustomer(): CustomerDetails {
+  try {
+    const saved = localStorage.getItem(DRAFT_CUSTOMER_STORAGE_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch (e) {
+    console.error('Error reading draft customer:', e);
+  }
+  return {
+    name: '',
+    phone: '',
+    deliveryType: 'delivery',
+    address: '',
+    deliveryDate: '',
+    generalNotes: '',
+  };
+}
+
+export function saveDraftCustomer(customer: CustomerDetails): void {
+  try {
+    localStorage.setItem(DRAFT_CUSTOMER_STORAGE_KEY, JSON.stringify(customer));
+  } catch (e) {
+    console.error('Error saving draft customer:', e);
+  }
+}
 
 export const DEFAULT_APP_SETTINGS: AppSettings = {
   companyName: 'Hortifruti & Distribuidora de Produtos',
