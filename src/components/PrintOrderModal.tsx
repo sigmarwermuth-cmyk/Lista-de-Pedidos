@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Printer, FileDown, Share2, Loader2 } from 'lucide-react';
+import { X, Printer, FileDown, Share2, Loader2, ArrowLeft } from 'lucide-react';
 import { CustomerDetails, OrderListItem, AppSettings } from '../types';
 import { formatQuantityStr, generateWhatsAppOrderList, getWhatsAppUrl } from '../utils/whatsapp';
 import { shareOrDownloadPDF } from '../utils/pdfGenerator';
@@ -68,14 +68,19 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Screen-Only Modal Header */}
-        <div className="p-4 sm:p-5 bg-slate-900 text-white flex items-center justify-between print:hidden">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-slate-800 text-emerald-400">
-              <Printer className="w-6 h-6" />
-            </div>
+        <div className="p-3.5 sm:p-5 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-2.5 print:hidden">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onClose}
+              className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1 border border-slate-700 shadow-xs"
+              title="Voltar para o aplicativo"
+            >
+              <ArrowLeft className="w-4 h-4 text-emerald-400" />
+              <span>Voltar</span>
+            </button>
             <div>
-              <h2 className="font-bold text-lg leading-tight">Impressão & Envio do Pedido</h2>
-              <p className="text-xs text-slate-300">
+              <h2 className="font-bold text-sm sm:text-lg leading-tight">Impressão & Envio do Pedido</h2>
+              <p className="text-[11px] sm:text-xs text-slate-300 hidden sm:block">
                 Imprima ou envie em formato PDF para o WhatsApp
               </p>
             </div>
@@ -85,27 +90,28 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
             <button
               onClick={handleSendWhatsAppPDF}
               disabled={isGeneratingPdf}
-              className="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-md"
+              className="px-2.5 sm:px-3 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white font-bold text-xs rounded-xl transition flex items-center gap-1 shadow-md"
             >
               {isGeneratingPdf ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
                 <Share2 className="w-4 h-4" />
               )}
-              <span>Enviar PDF WhatsApp</span>
+              <span>PDF WhatsApp</span>
             </button>
             <button
               onClick={handlePrint}
-              className="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-md"
+              className="px-3 sm:px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl transition flex items-center gap-1 shadow-md"
             >
               <Printer className="w-4 h-4" />
-              <span>Imprimir</span>
+              <span className="hidden sm:inline">Imprimir</span>
             </button>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-full hover:bg-slate-800 text-white transition ml-1"
+              className="p-1.5 rounded-full hover:bg-slate-800 text-slate-300 hover:text-white transition ml-1"
+              title="Fechar"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
           </div>
         </div>
@@ -172,29 +178,32 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
         </div>
 
         {/* Modal Bottom Bar for Screen View */}
-        <div className="p-4 bg-slate-100 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 print:hidden">
-          <div className="text-xs text-slate-600 space-y-0.5">
-            <span className="font-semibold block text-slate-800">Opções de Envio e Impressão:</span>
-            <span>📱 <strong>WhatsApp:</strong> Envia o arquivo PDF compactado diretamente no chat.</span>
-          </div>
+        <div className="p-3.5 sm:p-4 bg-slate-100 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 print:hidden">
+          <button
+            onClick={onClose}
+            className="py-2 px-3.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs transition flex items-center gap-1.5 active:scale-95"
+          >
+            <ArrowLeft className="w-4 h-4 text-slate-600" />
+            <span>Voltar / Fechar</span>
+          </button>
 
           <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={handleSendWhatsAppPDF}
               disabled={isGeneratingPdf}
-              className="py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5"
+              className="py-2.5 px-3.5 sm:px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5 active:scale-95"
             >
               {isGeneratingPdf ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
                 <FileDown className="w-4 h-4" />
               )}
-              <span>ENVIAR PDF NO WHATSAPP</span>
+              <span>ENVIAR PDF WHATSAPP</span>
             </button>
 
             <button
               onClick={handlePrint}
-              className="py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5"
+              className="py-2.5 px-3.5 sm:px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5 active:scale-95"
             >
               <Printer className="w-4 h-4" />
               <span>IMPRIMIR</span>

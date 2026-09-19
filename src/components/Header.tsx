@@ -47,8 +47,17 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Mobile Header Buttons */}
             <div className="flex md:hidden items-center gap-1.5">
               <button
+                onClick={onOpenHistory}
+                className="bg-slate-800 text-amber-400 font-bold px-2.5 py-2 rounded-xl text-xs flex items-center gap-1 border border-slate-700 active:scale-95"
+                title="Histórico de Pedidos"
+              >
+                <History className="w-4 h-4" />
+                <span className="text-[11px]">Histórico</span>
+              </button>
+
+              <button
                 onClick={onOpenProductManager}
-                className="bg-slate-800 text-indigo-400 font-bold p-2 rounded-xl text-xs flex items-center justify-center border border-slate-700"
+                className="bg-slate-800 text-indigo-400 font-bold p-2 rounded-xl text-xs flex items-center justify-center border border-slate-700 active:scale-95"
                 title="Cadastrar e Editar Produtos"
               >
                 <PackagePlus className="w-4 h-4" />
@@ -58,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 onClick={onOpenPrint}
-                className="relative bg-emerald-500 text-slate-950 font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-md"
+                className="relative bg-emerald-500 text-slate-950 font-extrabold px-3 py-2 rounded-xl text-xs flex items-center gap-1 shadow-md active:scale-95"
               >
                 <Printer className="w-4 h-4" />
                 <span>Imprimir ({listCount})</span>
