@@ -43,6 +43,8 @@ export const OBSOLETE_PRODUCT_NAMES = new Set([
   'cafe torrado e moido (500g)',
   'café torrado e moído',
   'cafe torrado e moido',
+  'café',
+  'cafe',
   'macarrão espaguete (500g)',
   'macarrao espaguete (500g)',
   'macarrão espaguete',
@@ -70,7 +72,38 @@ export const OBSOLETE_PRODUCT_NAMES = new Set([
   'coxa e sobretoxa',
 ]);
 
+export const DUMMY_BARCODES_TO_REMOVE = new Set([
+  '7898215151532',
+  '7898215152430',
+  '7898215151525',
+  '7898215152447',
+  '7896051111017',
+  '7896051130025',
+  '7896224800014',
+  '7898912345012',
+  '7891107010014',
+  '7896001250018',
+  '7898080640019',
+  '7891048030018',
+  '7891030003013',
+  '7891107101002',
+  '7896011400212',
+  '7896011400113',
+  '7896045505013',
+  '7894900011517',
+  '7891991000840',
+  '7898080641238',
+  '7896098900223',
+  '7891022100010',
+  '7896001254320',
+  '7891038001011',
+  '7896452301015',
+  '7896005800110',
+]);
+
 function mergeCatalogWithStored(stored: Product[]): Product[] {
+  let hasModifiedItem = false;
+
   // Filter out deprecated removed default items from previous cache and apply renames
   const cleanedStored = stored
     .filter((p) => {
@@ -81,28 +114,39 @@ function mergeCatalogWithStored(stored: Product[]): Product[] {
     })
     .map((p) => {
       const lower = p.name.toLowerCase().trim();
+      let updated = { ...p };
+
       if (lower === 'leite integral 1l' || lower === 'leite integral') {
-        return { ...p, name: 'Leite Integral Aurora 1L' };
+        updated.name = 'Leite Integral Aurora 1L';
+        hasModifiedItem = true;
+      } else if (lower === 'arroz chinês' || lower === 'arroz chines') {
+        updated.name = 'Arroz Chinês (5kg)';
+        hasModifiedItem = true;
+      } else if (lower === 'arroz panelaço' || lower === 'arroz panelaco') {
+        updated.name = 'Arroz Panelaço 5Kg';
+        hasModifiedItem = true;
+      } else if (lower === 'farinha de trigo marx 0000') {
+        updated.name = 'Farinha de Trigo Marx 0000 5kg';
+        hasModifiedItem = true;
+      } else if (lower === 'brócolis ninja' || lower === 'brocolis ninja') {
+        updated.name = 'Brócolis Unidade';
+        hasModifiedItem = true;
+      } else if (lower === 'cebola branca') {
+        updated.name = 'Cebola';
+        hasModifiedItem = true;
+      } else if (lower === 'melão amarelo' || lower === 'melao amarelo') {
+        updated.name = 'Melão Kg';
+        updated.unit = 'kg' as const;
+        hasModifiedItem = true;
       }
-      if (lower === 'arroz chinês' || lower === 'arroz chines') {
-        return { ...p, name: 'Arroz Chinês (5kg)' };
+
+      // If stored product has a dummy/test barcode, remove it so barcodes are only present when user types or scans
+      if (updated.barcode && DUMMY_BARCODES_TO_REMOVE.has(updated.barcode.trim())) {
+        delete updated.barcode;
+        hasModifiedItem = true;
       }
-      if (lower === 'arroz panelaço' || lower === 'arroz panelaco') {
-        return { ...p, name: 'Arroz Panelaço 5Kg' };
-      }
-      if (lower === 'farinha de trigo marx 0000') {
-        return { ...p, name: 'Farinha de Trigo Marx 0000 5kg' };
-      }
-      if (lower === 'brócolis ninja' || lower === 'brocolis ninja') {
-        return { ...p, name: 'Brócolis Unidade' };
-      }
-      if (lower === 'cebola branca') {
-        return { ...p, name: 'Cebola' };
-      }
-      if (lower === 'melão amarelo' || lower === 'melao amarelo') {
-        return { ...p, name: 'Melão Kg', unit: 'kg' as const };
-      }
-      return p;
+
+      return updated;
     });
 
   const existingIds = new Set(cleanedStored.map((p) => p.id));
@@ -127,7 +171,7 @@ function mergeCatalogWithStored(stored: Product[]): Product[] {
     if (catDiff !== 0) return catDiff;
     return a.name.localeCompare(b.name, 'pt-BR', { sensitivity: 'base' });
   });
-  if (cleanedStored.length !== stored.length || missing.length > 0) {
+  if (cleanedStored.length !== stored.length || missing.length > 0 || hasModifiedItem) {
     saveStoredProductsAsync(result);
   }
   return result;

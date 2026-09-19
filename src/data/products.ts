@@ -76,7 +76,6 @@ export const CATALOG_PRODUCTS: Product[] = [
   { id: 'm12', name: 'Arroz Chinês (5kg)', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🌾' },
   { id: 'm13', name: 'Arroz Panelaço 5Kg', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🌾' },
   { id: 'm19', name: 'Azeite de Soja Soya', category: 'mercearia', unit: 'unid', step: 1, minQty: 1, icon: '🧴' },
-  { id: 'm20', name: 'Café', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '☕' },
   { id: 'm11', name: 'Farinha de Milho Libardone', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🌽' },
   { id: 'm7', name: 'Farinha de Trigo (1kg)', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🌾' },
   { id: 'm10', name: 'Farinha de Trigo Marx 0000 5kg', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🌾' },

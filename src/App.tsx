@@ -38,6 +38,10 @@ import {
   resetStoredProducts,
   loadStoredProductsAsync
 } from './utils/productsStorage';
+import { useBarcodeScanner } from './hooks/useBarcodeScanner';
+import { playSuccessBeep, playNotFoundBeep } from './utils/audioFeedback';
+import { BarcodeScannerBanner, BarcodeScanResult } from './components/BarcodeScannerBanner';
+import { DesktopBarcodeIndicator } from './components/DesktopBarcodeIndicator';
 import { Sparkles, Printer, FileText, Search, X } from 'lucide-react';
 
 export default function App() {
@@ -93,13 +97,37 @@ export default function App() {
   const [editingProductForModal, setEditingProductForModal] = useState<Product | null>(null);
   const [savedListsHistory, setSavedListsHistory] = useState<SavedOrderList[]>(getStoredOrderLists());
 
-  const handleOpenProductManager = () => {
+  // Desktop Barcode Scanner states
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('pedidos_barcode_sound') !== 'false';
+    } catch {
+      return true;
+    }
+  });
+  const [scanResult, setScanResult] = useState<BarcodeScanResult | null>(null);
+  const [initialBarcodeForModal, setInitialBarcodeForModal] = useState<string | null>(null);
+  const [lastScannedTime, setLastScannedTime] = useState<number>(0);
+
+  const toggleSound = () => {
+    setSoundEnabled((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem('pedidos_barcode_sound', String(next));
+      } catch {}
+      return next;
+    });
+  };
+
+  const handleOpenProductManager = (barcode?: string) => {
     setEditingProductForModal(null);
+    setInitialBarcodeForModal(barcode || null);
     setIsProductManagerOpen(true);
   };
 
   const handleQuickEditProduct = (prod: Product) => {
     setEditingProductForModal(prod);
+    setInitialBarcodeForModal(null);
     setIsProductManagerOpen(true);
   };
 
@@ -196,6 +224,79 @@ export default function App() {
       }
     });
   };
+
+  // --- GLOBAL 1D/2D BARCODE SCANNER HANDLER ---
+  const handleBarcodeScanned = (scannedCode: string) => {
+    const raw = scannedCode.trim();
+    if (!raw) return;
+
+    const cleanRaw = raw.toLowerCase();
+    const cleanDigits = raw.replace(/\D/g, '');
+
+    const matchedProduct = products.find((p) => {
+      if (!p.barcode) return false;
+      const prodBarcode = p.barcode.trim().toLowerCase();
+      const prodBarcodeDigits = p.barcode.replace(/\D/g, '');
+
+      return (
+        prodBarcode === cleanRaw ||
+        (cleanDigits.length >= 3 && prodBarcodeDigits === cleanDigits)
+      );
+    });
+
+    if (matchedProduct) {
+      if (soundEnabled) {
+        playSuccessBeep();
+      }
+
+      const existingItem = orderListItems.find((item) => item.id === matchedProduct.id);
+      const step = matchedProduct.step || 1;
+      const minQty = matchedProduct.minQty || step || 1;
+
+      let newQty: number;
+      if (existingItem) {
+        const currentQty =
+          typeof existingItem.quantity === 'number'
+            ? existingItem.quantity
+            : parseFloat(String(existingItem.quantity)) || 0;
+        newQty = Math.round((currentQty + step) * 100) / 100;
+        handleUpdateProductQuantity(matchedProduct, newQty, existingItem.unit, existingItem.note);
+      } else {
+        newQty = minQty;
+        handleUpdateProductQuantity(matchedProduct, newQty, matchedProduct.unit);
+      }
+
+      // If user had searched with this barcode in search bar, clear search so full grid is visible
+      if (searchTerm.trim() === raw) {
+        setSearchTerm('');
+      }
+
+      setLastScannedTime(Date.now());
+      setScanResult({
+        code: raw,
+        timestamp: Date.now(),
+        product: matchedProduct,
+        quantity: newQty,
+        unit: existingItem?.unit || matchedProduct.unit || 'unid',
+        isNotFound: false,
+      });
+    } else {
+      if (soundEnabled) {
+        playNotFoundBeep();
+      }
+
+      setScanResult({
+        code: raw,
+        timestamp: Date.now(),
+        isNotFound: true,
+      });
+    }
+  };
+
+  useBarcodeScanner({
+    onScan: handleBarcodeScanned,
+    enabled: !isPrintModalOpen && !isHistoryOpen && !isProductManagerOpen,
+  });
 
   const handleUpdateUnitById = (id: string, newUnit: string) => {
     setOrderListItems((prev) => {
@@ -350,13 +451,22 @@ export default function App() {
         </div>
       )}
 
+      {/* Barcode Scanner Floating Notification Banner */}
+      <BarcodeScannerBanner
+        scanResult={scanResult}
+        onClear={() => setScanResult(null)}
+        onRegisterBarcode={handleOpenProductManager}
+        soundEnabled={soundEnabled}
+        onToggleSound={toggleSound}
+      />
+
       {/* Header */}
       <Header
         appSettings={appSettings}
         listCount={orderListItems.length}
         onOpenPrint={handleOpenPrintModal}
         onOpenHistory={() => setIsHistoryOpen(true)}
-        onOpenProductManager={handleOpenProductManager}
+        onOpenProductManager={() => handleOpenProductManager()}
         onClearList={handleClearList}
       />
 
@@ -378,6 +488,14 @@ export default function App() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
           {/* Left / Main Column: Products Catalog Grid */}
           <div className="lg:col-span-2 space-y-4">
+            {/* Desktop Barcode Scanner Active Indicator */}
+            <DesktopBarcodeIndicator
+              soundEnabled={soundEnabled}
+              onToggleSound={toggleSound}
+              lastScannedCode={scanResult?.code}
+              lastScannedTime={lastScannedTime}
+            />
+
             {/* Search Bar directly above products */}
             <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200 shadow-sm print:hidden">
               <label htmlFor="product-catalog-search" className="block text-xs font-bold text-[#001b69] uppercase tracking-wider mb-2 flex items-center justify-between">
@@ -525,12 +643,17 @@ export default function App() {
       <ProductManagerModal
         isOpen={isProductManagerOpen}
         products={products}
-        onClose={() => setIsProductManagerOpen(false)}
+        onClose={() => {
+          setIsProductManagerOpen(false);
+          setEditingProductForModal(null);
+          setInitialBarcodeForModal(null);
+        }}
         onAddProduct={handleAddProduct}
         onUpdateProduct={handleUpdateProduct}
         onDeleteProduct={handleDeleteProduct}
         onResetProducts={handleResetProducts}
         initialEditingProduct={editingProductForModal}
+        initialBarcode={initialBarcodeForModal}
       />
 
       <OfflineIndicator />
