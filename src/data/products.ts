@@ -64,13 +64,13 @@ export const CATALOG_PRODUCTS: Product[] = [
 
   // --- AÇOUGUE & CARNES ---
   { id: 'ac1', name: 'Peito de Frango Sem Osso', category: 'acougue', unit: 'kg', step: 1, minQty: 1, icon: '🍗' },
-  { id: 'ac2', name: 'Coxa e Sobretoxa de Frango', category: 'acougue', unit: 'kg', step: 1, minQty: 1, icon: '🍗' },
+  { id: 'ac2', name: 'Coxa e Sobrecoxa de Frango', category: 'acougue', unit: 'kg', step: 1, minQty: 1, icon: '🍗' },
   { id: 'ac3', name: 'Contra Filé Bovino', category: 'acougue', unit: 'kg', step: 1, minQty: 1, icon: '🥩' },
   { id: 'ac4', name: 'Patinho Bovino (Moído ou Bife)', category: 'acougue', unit: 'kg', step: 1, minQty: 1, icon: '🥩' },
   { id: 'ac5', name: 'Alcatra Bovina', category: 'acougue', unit: 'kg', step: 1, minQty: 1, icon: '🥩' },
   { id: 'ac6', name: 'Costela Bovina', category: 'acougue', unit: 'kg', step: 1, minQty: 1, icon: '🥩' },
   { id: 'ac7', name: 'Bisteca Suína', category: 'acougue', unit: 'kg', step: 1, minQty: 1, icon: '🥩' },
-  { id: 'ac8', name: 'Linguiça Toscama', category: 'acougue', unit: 'kg', step: 1, minQty: 1, icon: '🌭' },
+  { id: 'ac8', name: 'Linguiça Toscana', category: 'acougue', unit: 'kg', step: 1, minQty: 1, icon: '🌭' },
 
   // --- MERCEARIA ---
   { id: 'm1', name: 'Arroz Branco (5kg)', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🌾' },
