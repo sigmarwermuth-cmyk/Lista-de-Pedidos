@@ -80,23 +80,16 @@ export function createFallbackPDFBlob(
   pdf.setTextColor(15, 23, 42); // slate-900
   pdf.text('LISTA DE PEDIDO DE PRODUTOS', 14, 16);
 
-  if (companyName) {
-    pdf.setFontSize(9);
-    pdf.setFont('helvetica', 'normal');
-    pdf.setTextColor(71, 85, 105);
-    pdf.text(`Para: ${companyName}`, 14, 21);
-  }
-
   // Divider
   pdf.setDrawColor(15, 23, 42);
   pdf.setLineWidth(0.6);
-  pdf.line(14, 24, 196, 24);
+  pdf.line(14, 20, 196, 20);
 
   // Customer & Order Information
   pdf.setFontSize(9);
   pdf.setTextColor(15, 23, 42);
 
-  let currentY = 28;
+  let currentY = 25;
   if (customerDetails.name && customerDetails.name.trim() !== '' && customerDetails.name !== 'Não informado') {
     pdf.setFont('helvetica', 'bold');
     pdf.text(`Cliente: ${customerDetails.name.trim()}`, 14, currentY);
