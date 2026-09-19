@@ -47,8 +47,7 @@ export default defineConfig(() => {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
         },
         devOptions: {
-          enabled: true,
-          type: 'module',
+          enabled: false,
         },
       }),
     ],
@@ -58,6 +57,8 @@ export default defineConfig(() => {
       },
     },
     build: {
+      outDir: 'dist',
+      emptyOutDir: true,
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
