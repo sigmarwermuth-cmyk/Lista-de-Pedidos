@@ -104,9 +104,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Product Name */}
-        <h3 className="font-bold text-slate-900 text-sm leading-snug line-clamp-2 mb-1">
+        <h3 className="font-bold text-slate-900 text-sm leading-snug line-clamp-2 mb-0.5">
           {product.name}
         </h3>
+        
+        {product.barcode && (
+          <p className="font-mono text-[10px] font-semibold text-slate-500 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded w-fit mb-1">
+            Cód: {product.barcode}
+          </p>
+        )}
+
         <p className="text-slate-400 text-[11px] capitalize">
           Categoria: {product.category}
         </p>

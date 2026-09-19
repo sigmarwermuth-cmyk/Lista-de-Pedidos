@@ -127,6 +127,16 @@ export default function App() {
     const nextProducts = products.map((p) => (p.id === updatedProduct.id ? updatedProduct : p));
     setProducts(nextProducts);
     saveStoredProducts(nextProducts);
+
+    // Also update barcode/name/category in current active list items if present
+    setOrderListItems((prev) =>
+      prev.map((item) =>
+        item.id === updatedProduct.id
+          ? { ...item, name: updatedProduct.name, category: updatedProduct.category, barcode: updatedProduct.barcode }
+          : item
+      )
+    );
+
     showToast(`Produto "${updatedProduct.name}" atualizado com sucesso! ✏️`);
   };
 
@@ -166,6 +176,7 @@ export default function App() {
           ...next[idx], 
           quantity, 
           unit: chosenUnit, 
+          barcode: product.barcode || next[idx].barcode,
           note: note !== undefined ? note : next[idx].note 
         };
         return next;
@@ -178,6 +189,7 @@ export default function App() {
             category: product.category,
             quantity,
             unit: chosenUnit,
+            barcode: product.barcode,
             note,
           },
         ];
@@ -269,10 +281,12 @@ export default function App() {
   // --- FILTERED PRODUCTS ---
   const filteredProducts = useMemo(() => {
     return products.filter((prod) => {
+      const term = searchTerm.toLowerCase();
       const matchesSearch =
         searchTerm === '' ||
-        prod.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        prod.category.toLowerCase().includes(searchTerm.toLowerCase());
+        prod.name.toLowerCase().includes(term) ||
+        prod.category.toLowerCase().includes(term) ||
+        (prod.barcode && prod.barcode.toLowerCase().includes(term));
 
       const matchesCat =
         selectedCategory === 'todos' || prod.category === selectedCategory;

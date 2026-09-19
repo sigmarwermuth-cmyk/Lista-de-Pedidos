@@ -21,6 +21,7 @@ export interface Product {
   description?: string;
   image?: string;
   icon?: string;
+  barcode?: string;
 }
 
 export interface OrderListItem {
@@ -31,6 +32,7 @@ export interface OrderListItem {
   unit: string;
   note?: string;
   isCustom?: boolean;
+  barcode?: string;
 }
 
 export interface CustomerDetails {

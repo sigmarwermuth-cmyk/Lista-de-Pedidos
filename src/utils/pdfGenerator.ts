@@ -144,8 +144,9 @@ export function createFallbackPDFBlob(
     pdf.setDrawColor(148, 163, 184);
     pdf.rect(16.5, currentY + 1.2, 3.8, 3.8);
 
+    const nameWithBarcode = item.barcode ? `${index + 1}. ${item.name} [${item.barcode}]` : `${index + 1}. ${item.name}`;
     pdf.setFont('helvetica', 'bold');
-    pdf.text(`${index + 1}. ${item.name}`, 30, currentY + 4.5);
+    pdf.text(nameWithBarcode, 30, currentY + 4.5);
     pdf.setFont('helvetica', 'bold');
     pdf.text(formatQuantityStr(item.quantity, item.unit), 125, currentY + 4.5);
     pdf.setFont('helvetica', 'normal');

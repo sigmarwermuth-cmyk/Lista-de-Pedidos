@@ -163,6 +163,11 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
                     </td>
                     <td className="py-0.5 px-2 border border-slate-300 font-bold text-slate-900 leading-tight">
                       {index + 1}. {item.name}
+                      {item.barcode && (
+                        <span className="ml-1.5 font-mono text-[10px] font-normal text-slate-600">
+                          [{item.barcode}]
+                        </span>
+                      )}
                     </td>
                     <td className="py-0.5 px-2 border border-slate-300 text-center font-extrabold text-slate-900 bg-slate-100/50 leading-tight">
                       {formatQuantityStr(item.quantity, item.unit)}

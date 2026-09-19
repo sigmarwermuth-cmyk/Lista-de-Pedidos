@@ -57,7 +57,8 @@ export function generateWhatsAppOrderList(
   lines.push(`📋 *PRODUTOS DA LISTA (${items.length} ITENS):*`);
   items.forEach((item, idx) => {
     const qtyFormatted = formatQuantityStr(item.quantity, item.unit);
-    lines.push(`${idx + 1}. *${item.name}* — ${qtyFormatted}`);
+    const barcodeStr = item.barcode ? ` _[Cód: ${item.barcode}]_` : '';
+    lines.push(`${idx + 1}. *${item.name}*${barcodeStr} — ${qtyFormatted}`);
     if (item.note && item.note.trim() !== '') {
       lines.push(`   └ 💬 *Obs:* _"${item.note.trim()}"_`);
     }

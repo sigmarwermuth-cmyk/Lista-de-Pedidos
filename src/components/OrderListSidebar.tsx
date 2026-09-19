@@ -145,6 +145,11 @@ export const OrderListSidebar: React.FC<OrderListSidebarProps> = ({
                       <span className="font-extrabold text-xs text-slate-900">
                         {idx + 1}. {item.name}
                       </span>
+                      {item.barcode && (
+                        <span className="font-mono text-[9px] bg-slate-100 border border-slate-200 px-1 py-0.2 rounded font-semibold text-slate-700">
+                          [{item.barcode}]
+                        </span>
+                      )}
                       {item.isCustom && (
                         <span className="px-1.5 py-0.2 text-[9px] bg-amber-100 text-amber-800 rounded font-bold">
                           Personalizado
