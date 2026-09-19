@@ -33,9 +33,9 @@ export const CustomItemForm: React.FC<CustomItemFormProps> = ({ onAddCustomItem 
   };
 
   return (
-    <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white rounded-3xl p-5 shadow-lg border border-slate-700">
+    <div className="bg-gradient-to-r from-[#001b69] via-[#00247a] to-[#001b69] text-white rounded-3xl p-5 shadow-lg border border-[#002c8f]">
       <div className="flex items-center gap-2 mb-3">
-        <Sparkles className="w-5 h-5 text-amber-400" />
+        <Sparkles className="w-5 h-5 text-[#f1b500]" />
         <h3 className="font-bold text-sm sm:text-base text-white">
           Não encontrou no catálogo? Adicione qualquer item personalizado
         </h3>
@@ -49,7 +49,7 @@ export const CustomItemForm: React.FC<CustomItemFormProps> = ({ onAddCustomItem 
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Nome do produto (ex: Carvão 5kg, Hortelã maço...)"
-            className="w-full px-3.5 py-2.5 bg-slate-950/80 border border-slate-700 focus:border-emerald-400 rounded-xl text-xs sm:text-sm text-white placeholder-slate-400 focus:outline-none"
+            className="w-full px-3.5 py-2.5 bg-[#001248]/90 border border-[#002888] focus:border-[#008d36] rounded-xl text-xs sm:text-sm text-white placeholder-sky-200/60 focus:outline-none"
           />
         </div>
 
@@ -59,13 +59,13 @@ export const CustomItemForm: React.FC<CustomItemFormProps> = ({ onAddCustomItem 
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
             placeholder="Qtd (ex: 2)"
-            className="w-20 px-3 py-2.5 bg-slate-950/80 border border-slate-700 focus:border-emerald-400 rounded-xl text-xs sm:text-sm text-white text-center focus:outline-none font-bold"
+            className="w-20 px-3 py-2.5 bg-[#001248]/90 border border-[#002888] focus:border-[#008d36] rounded-xl text-xs sm:text-sm text-white text-center focus:outline-none font-bold"
           />
 
           <select
             value={unit}
             onChange={(e) => setUnit(e.target.value)}
-            className="flex-1 px-2 py-2.5 bg-slate-950/80 border border-slate-700 focus:border-emerald-400 rounded-xl text-xs text-white focus:outline-none font-medium"
+            className="flex-1 px-2 py-2.5 bg-[#001248]/90 border border-[#002888] focus:border-[#008d36] rounded-xl text-xs text-white focus:outline-none font-medium"
           >
             <option value="unid">unid</option>
             <option value="kg">kg</option>
@@ -80,7 +80,7 @@ export const CustomItemForm: React.FC<CustomItemFormProps> = ({ onAddCustomItem 
         <div>
           <button
             type="submit"
-            className="w-full h-full py-2.5 px-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs sm:text-sm rounded-xl transition shadow-md flex items-center justify-center gap-1.5 active:scale-98"
+            className="w-full h-full py-2.5 px-4 bg-[#008d36] hover:bg-[#00732d] text-white font-black text-xs sm:text-sm rounded-xl transition shadow-md flex items-center justify-center gap-1.5 active:scale-98"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Inserir na Lista</span>

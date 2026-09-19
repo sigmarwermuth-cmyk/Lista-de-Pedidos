@@ -68,19 +68,19 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Screen-Only Modal Header */}
-        <div className="p-3.5 sm:p-5 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-2.5 print:hidden">
+        <div className="p-3.5 sm:p-5 bg-[#001b69] text-white flex flex-wrap items-center justify-between gap-2.5 print:hidden">
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
-              className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1 border border-slate-700 shadow-xs"
+              className="px-2.5 py-1.5 bg-[#001248] hover:bg-[#00185e] text-slate-200 hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1 border border-[#002888] shadow-xs"
               title="Voltar para o aplicativo"
             >
-              <ArrowLeft className="w-4 h-4 text-emerald-400" />
+              <ArrowLeft className="w-4 h-4 text-[#f1b500]" />
               <span>Voltar</span>
             </button>
             <div>
               <h2 className="font-bold text-sm sm:text-lg leading-tight">Impressão & Envio do Pedido</h2>
-              <p className="text-[11px] sm:text-xs text-slate-300 hidden sm:block">
+              <p className="text-[11px] sm:text-xs text-sky-200 hidden sm:block">
                 Imprima ou envie em formato PDF para o WhatsApp
               </p>
             </div>
@@ -90,7 +90,7 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
             <button
               onClick={handleSendWhatsAppPDF}
               disabled={isGeneratingPdf}
-              className="px-2.5 sm:px-3 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white font-bold text-xs rounded-xl transition flex items-center gap-1 shadow-md"
+              className="px-2.5 sm:px-3 py-2 bg-[#008d36] hover:bg-[#00732d] disabled:opacity-50 text-white font-bold text-xs rounded-xl transition flex items-center gap-1 shadow-md"
             >
               {isGeneratingPdf ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -101,14 +101,14 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
             </button>
             <button
               onClick={handlePrint}
-              className="px-3 sm:px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl transition flex items-center gap-1 shadow-md"
+              className="px-3 sm:px-3.5 py-2 bg-[#001248] hover:bg-[#00185e] text-white font-bold text-xs rounded-xl transition flex items-center gap-1 border border-[#002888] shadow-md"
             >
-              <Printer className="w-4 h-4" />
+              <Printer className="w-4 h-4 text-[#f1b500]" />
               <span className="hidden sm:inline">Imprimir</span>
             </button>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-full hover:bg-slate-800 text-slate-300 hover:text-white transition ml-1"
+              className="p-1.5 rounded-full hover:bg-[#001248] text-sky-200 hover:text-white transition ml-1"
               title="Fechar"
             >
               <X className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -118,7 +118,7 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
 
         {/* Notice Banner when PDF downloaded */}
         {pdfMessage && (
-          <div className="bg-emerald-50 border-b border-emerald-200 p-2.5 text-center text-xs font-semibold text-emerald-800 print:hidden animate-fade-in">
+          <div className="bg-emerald-50 border-b border-emerald-200 p-2.5 text-center text-xs font-semibold text-[#008d36] print:hidden animate-fade-in">
             ✅ {pdfMessage}
           </div>
         )}
@@ -129,11 +129,11 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
           className="p-4 sm:p-6 overflow-y-auto bg-white text-slate-900 font-sans print:p-0 print:overflow-visible printable-sheet text-[12px]"
         >
           {/* Top Bar with Total Count */}
-          <div className="border-b-2 border-slate-900 pb-1.5 mb-2 flex items-center justify-between gap-3">
-            <h2 className="text-[14px] font-black tracking-tight text-slate-900">
+          <div className="border-b-2 border-[#001b69] pb-1.5 mb-2 flex items-center justify-between gap-3">
+            <h2 className="text-[14px] font-black tracking-tight text-[#001b69]">
               Lista de Pedidos
             </h2>
-            <div className="text-right text-[12px] font-black text-slate-900 uppercase">
+            <div className="text-right text-[12px] font-black text-[#001b69] uppercase">
               Total: {items.length} {items.length === 1 ? 'item' : 'itens'}
             </div>
           </div>
@@ -143,11 +143,11 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
           <div className="mb-3">
             <table className="w-full border-collapse text-left text-[12px]">
               <thead>
-                <tr className="bg-slate-900 text-white font-bold text-[12px] uppercase print:bg-slate-900 print:text-white">
-                  <th className="py-0.5 px-2 w-32 border border-slate-900">Código</th>
-                  <th className="py-0.5 px-2 border border-slate-900">Item / Produto</th>
-                  <th className="py-0.5 px-2 w-28 text-center border border-slate-900">Quantidade</th>
-                  <th className="py-0.5 px-2 border border-slate-900">Observações</th>
+                <tr className="bg-[#001b69] text-white font-bold text-[12px] uppercase print:bg-[#001b69] print:text-white">
+                  <th className="py-0.5 px-2 border border-[#001b69]">Item / Produto</th>
+                  <th className="py-0.5 px-2 w-28 text-center border border-[#001b69]">Quantidade</th>
+                  <th className="py-0.5 px-2 w-32 border border-[#001b69]">Código</th>
+                  <th className="py-0.5 px-2 w-36 border border-[#001b69]">Quantidade Total</th>
                 </tr>
               </thead>
               <tbody>
@@ -156,14 +156,14 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
                     key={item.id} 
                     className={index % 2 === 0 ? 'bg-white' : 'bg-slate-50/70'}
                   >
-                    <td className="py-0.5 px-2 border border-slate-300 font-mono text-[11px] font-bold text-slate-800">
-                      {item.barcode || '-'}
-                    </td>
                     <td className="py-0.5 px-2 border border-slate-300 font-bold text-slate-900 leading-tight">
                       {index + 1}. {item.name}
                     </td>
                     <td className="py-0.5 px-2 border border-slate-300 text-center font-extrabold text-slate-900 bg-slate-100/50 leading-tight">
                       {formatQuantityStr(item.quantity, item.unit)}
+                    </td>
+                    <td className="py-0.5 px-2 border border-slate-300 font-mono text-[11px] font-bold text-slate-800">
+                      {item.barcode || '-'}
                     </td>
                     <td className="py-0.5 px-2 border border-slate-300 text-slate-600 italic leading-tight">
                       {item.note || '-'}

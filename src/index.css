@@ -21,7 +21,7 @@
 }
 
 .printable-sheet th {
-  background-color: #0f172a;
+  background-color: #001b69;
   color: #ffffff;
 }
 
@@ -120,7 +120,7 @@
   }
 
   #printable-order-sheet th {
-    background-color: #0f172a !important;
+    background-color: #001b69 !important;
     color: #ffffff !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;

@@ -25,20 +25,20 @@ export const Header: React.FC<HeaderProps> = ({
   onClearList,
 }) => {
   return (
-    <header className="sticky top-0 z-30 bg-slate-900 text-white shadow-md print:hidden">
+    <header className="sticky top-0 z-30 bg-[#001b69] text-white shadow-md print:hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           {/* Logo & Company Title */}
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-emerald-500 text-slate-950 font-black text-2xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#008d36] text-white font-black text-2xl flex items-center justify-center shadow-lg shadow-[#008d36]/20">
                 📋
               </div>
               <div>
                 <h1 className="font-extrabold text-lg sm:text-xl leading-tight text-white tracking-tight">
-                  {appSettings.companyName || 'Lista de Pedidos'}
+                  {appSettings.companyName || 'Pedidos Hortifruti'}
                 </h1>
-                <p className="text-xs text-slate-300 font-medium">
+                <p className="text-xs text-sky-200 font-medium">
                   {appSettings.headerSubtitle || 'Montagem de Pedido de Produtos e Hortifruti'}
                 </p>
               </div>
@@ -48,7 +48,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="flex md:hidden items-center gap-1.5">
               <button
                 onClick={onOpenHistory}
-                className="bg-slate-800 text-amber-400 font-bold px-2.5 py-2 rounded-xl text-xs flex items-center gap-1 border border-slate-700 active:scale-95"
+                className="bg-[#001248] text-[#f1b500] font-bold px-2.5 py-2 rounded-xl text-xs flex items-center gap-1 border border-[#002888] active:scale-95"
                 title="Histórico de Pedidos"
               >
                 <History className="w-4 h-4" />
@@ -57,7 +57,7 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 onClick={onOpenProductManager}
-                className="bg-slate-800 text-indigo-400 font-bold p-2 rounded-xl text-xs flex items-center justify-center border border-slate-700 active:scale-95"
+                className="bg-[#001248] text-sky-300 font-bold p-2 rounded-xl text-xs flex items-center justify-center border border-[#002888] active:scale-95"
                 title="Cadastrar e Editar Produtos"
               >
                 <PackagePlus className="w-4 h-4" />
@@ -67,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 onClick={onOpenPrint}
-                className="relative bg-emerald-500 text-slate-950 font-extrabold px-3 py-2 rounded-xl text-xs flex items-center gap-1 shadow-md active:scale-95"
+                className="relative bg-[#008d36] hover:bg-[#00732d] text-white font-extrabold px-3 py-2 rounded-xl text-xs flex items-center gap-1 shadow-md active:scale-95"
               >
                 <Printer className="w-4 h-4" />
                 <span>Imprimir ({listCount})</span>
@@ -77,18 +77,18 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Search Bar */}
           <div className="relative flex-1 max-w-md">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Search className="w-4 h-4 text-sky-300/80 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Buscar fruta, legume, verdura ou produto..."
-              className="w-full pl-10 pr-9 py-2 bg-slate-800 text-white placeholder-slate-400 border border-slate-700 focus:border-emerald-400 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-emerald-400"
+              className="w-full pl-10 pr-9 py-2 bg-[#001248] text-white placeholder-sky-200/60 border border-[#002888] focus:border-[#008d36] rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#008d36]"
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-sky-300 hover:text-white"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -99,10 +99,10 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="hidden md:flex items-center gap-2">
             <button
               onClick={onOpenProductManager}
-              className="px-3 py-2 text-xs font-semibold text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 transition flex items-center gap-1.5"
+              className="px-3 py-2 text-xs font-semibold text-sky-100 hover:text-white bg-[#001248] hover:bg-[#00185e] rounded-xl border border-[#002888] transition flex items-center gap-1.5"
               title="Cadastrar, editar ou remover produtos do catálogo"
             >
-              <PackagePlus className="w-4 h-4 text-indigo-400" />
+              <PackagePlus className="w-4 h-4 text-sky-300" />
               <span>Produtos</span>
             </button>
 
@@ -111,7 +111,7 @@ export const Header: React.FC<HeaderProps> = ({
             {listCount > 0 && (
               <button
                 onClick={onClearList}
-                className="px-3 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 transition"
+                className="px-3 py-2 text-xs font-semibold text-slate-200 hover:text-white bg-[#001248] hover:bg-[#00185e] rounded-xl border border-[#002888] transition"
                 title="Limpar todos os itens da lista atual"
               >
                 Nova Lista
@@ -120,9 +120,9 @@ export const Header: React.FC<HeaderProps> = ({
 
             <button
               onClick={onOpenHistory}
-              className="px-3 py-2 text-xs font-semibold text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 transition flex items-center gap-1.5"
+              className="px-3 py-2 text-xs font-semibold text-[#f1b500] hover:text-amber-200 bg-[#001248] hover:bg-[#00185e] rounded-xl border border-[#002888] transition flex items-center gap-1.5"
             >
-              <History className="w-4 h-4 text-amber-400" />
+              <History className="w-4 h-4 text-[#f1b500]" />
               <span>Histórico</span>
             </button>
 
@@ -131,8 +131,8 @@ export const Header: React.FC<HeaderProps> = ({
               disabled={listCount === 0}
               className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-black transition flex items-center gap-2 shadow-lg ${
                 listCount > 0
-                  ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 active:scale-95'
-                  : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
+                  ? 'bg-[#008d36] hover:bg-[#00732d] text-white active:scale-95'
+                  : 'bg-[#001248] text-slate-400 cursor-not-allowed border border-[#002888]'
               }`}
             >
               <Printer className="w-4 h-4" />

@@ -30,12 +30,12 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-4 sm:p-5 bg-slate-900 text-white flex items-center justify-between">
+        <div className="p-4 sm:p-5 bg-[#001b69] text-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <History className="w-6 h-6 text-amber-400" />
+            <History className="w-6 h-6 text-[#f1b500]" />
             <div>
               <h2 className="font-bold text-lg leading-tight">Histórico de Pedidos Salvos</h2>
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-sky-200">
                 {lists.length} {lists.length === 1 ? 'pedido salvo' : 'pedidos salvos'}
               </p>
             </div>
@@ -44,7 +44,7 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
             {lists.length > 0 && (
               <button
                 onClick={() => setConfirmClearAll(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/20 text-red-300 hover:bg-red-500 hover:text-white rounded-xl text-xs font-semibold transition"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/20 text-red-200 hover:bg-red-500 hover:text-white rounded-xl text-xs font-semibold transition"
                 title="Limpar Todo o Histórico"
               >
                 <Trash2 className="w-3.5 h-3.5" />
@@ -53,7 +53,7 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
             )}
             <button
               onClick={onClose}
-              className="p-1.5 rounded-full hover:bg-slate-800 text-white transition"
+              className="p-1.5 rounded-full hover:bg-[#001248] text-white transition"
             >
               <X className="w-6 h-6" />
             </button>

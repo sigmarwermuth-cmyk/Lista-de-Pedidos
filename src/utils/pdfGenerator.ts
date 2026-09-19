@@ -77,11 +77,11 @@ export function createFallbackPDFBlob(
   // Header Title
   pdf.setFont('helvetica', 'bold');
   pdf.setFontSize(14);
-  pdf.setTextColor(15, 23, 42); // slate-900
+  pdf.setTextColor(0, 27, 105); // CooperA1 Blue
   pdf.text('LISTA DE PEDIDO DE PRODUTOS', 14, 16);
 
   // Divider
-  pdf.setDrawColor(15, 23, 42);
+  pdf.setDrawColor(0, 27, 105);
   pdf.setLineWidth(0.6);
   pdf.line(14, 20, 196, 20);
 
@@ -116,15 +116,15 @@ export function createFallbackPDFBlob(
   currentY += 3;
 
   // Items Table Header
-  pdf.setFillColor(15, 23, 42);
+  pdf.setFillColor(0, 27, 105);
   pdf.rect(14, currentY, 182, 7, 'F');
   pdf.setTextColor(255, 255, 255);
   pdf.setFont('helvetica', 'bold');
   pdf.setFontSize(8);
-  pdf.text('Código', 16, currentY + 4.8);
-  pdf.text('Item / Produto', 55, currentY + 4.8);
-  pdf.text('Quantidade', 130, currentY + 4.8);
-  pdf.text('Observações', 165, currentY + 4.8);
+  pdf.text('Item / Produto', 16, currentY + 4.8);
+  pdf.text('Quantidade', 88, currentY + 4.8);
+  pdf.text('Código', 122, currentY + 4.8);
+  pdf.text('Quantidade Total', 155, currentY + 4.8);
 
   currentY += 7;
   pdf.setTextColor(15, 23, 42);
@@ -140,15 +140,17 @@ export function createFallbackPDFBlob(
       pdf.rect(14, currentY, 182, 6.5, 'F');
     }
 
-    pdf.setFont('courier', 'bold');
-    pdf.text(item.barcode || '-', 16, currentY + 4.5);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text(`${index + 1}. ${item.name}`, 16, currentY + 4.5);
 
     pdf.setFont('helvetica', 'bold');
-    pdf.text(`${index + 1}. ${item.name}`, 55, currentY + 4.5);
-    pdf.setFont('helvetica', 'bold');
-    pdf.text(formatQuantityStr(item.quantity, item.unit), 130, currentY + 4.5);
+    pdf.text(formatQuantityStr(item.quantity, item.unit), 88, currentY + 4.5);
+
+    pdf.setFont('courier', 'bold');
+    pdf.text(item.barcode || '-', 122, currentY + 4.5);
+
     pdf.setFont('helvetica', 'normal');
-    pdf.text(item.note || '-', 165, currentY + 4.5);
+    pdf.text(item.note || '-', 155, currentY + 4.5);
 
     pdf.setDrawColor(226, 232, 240);
     pdf.line(14, currentY + 6.5, 196, currentY + 6.5);

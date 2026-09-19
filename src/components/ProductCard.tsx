@@ -58,7 +58,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     <div 
       className={`bg-white rounded-2xl border p-4 shadow-xs transition-all flex flex-col justify-between relative group ${
         currentQty > 0
-          ? 'border-emerald-500 ring-2 ring-emerald-500/10 bg-emerald-50/20'
+          ? 'border-[#008d36] ring-2 ring-[#008d36]/20 bg-emerald-50/30'
           : 'border-slate-200 hover:border-slate-300'
       }`}
     >
@@ -73,7 +73,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               <button
                 type="button"
                 onClick={() => onEditProduct(product)}
-                className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition"
+                className="p-1.5 text-slate-400 hover:text-[#001b69] hover:bg-sky-50 rounded-lg transition"
                 title="Editar este produto"
               >
                 <Edit2 className="w-3.5 h-3.5" />
@@ -91,7 +91,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                   onClick={() => handleUnitChange(u)}
                   className={`px-2 py-0.5 rounded-lg text-[10px] font-extrabold uppercase transition ${
                     isActive
-                      ? 'bg-slate-900 text-white shadow-xs'
+                      ? 'bg-[#001b69] text-white shadow-xs'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/70'
                   }`}
                   title={`Alternar para ${u}`}
@@ -124,9 +124,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <button
               type="button"
               onClick={() => setShowNoteInput(!showNoteInput)}
-              className="text-[11px] font-medium text-emerald-700 hover:underline flex items-center gap-1"
+              className="text-[11px] font-medium text-[#008d36] hover:underline flex items-center gap-1"
             >
-              <MessageSquare className="w-3 h-3 text-emerald-600" />
+              <MessageSquare className="w-3 h-3 text-[#008d36]" />
               <span>{listItem?.note ? `Obs: "${listItem.note}"` : '+ Adicionar observação'}</span>
             </button>
 
@@ -136,7 +136,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 value={listItem?.note || ''}
                 onChange={(e) => onUpdateNote(product, e.target.value)}
                 placeholder="Ex: Bananas maduras..."
-                className="mt-1 w-full text-xs px-2.5 py-1 bg-white border border-emerald-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 text-slate-800"
+                className="mt-1 w-full text-xs px-2.5 py-1 bg-white border border-emerald-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#008d36] text-slate-800"
               />
             )}
           </div>
@@ -146,22 +146,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       {/* Quantity / Add Controls */}
       <div className="mt-4 pt-3 border-t border-slate-100">
         {currentQty > 0 ? (
-          <div className="flex items-center justify-between bg-emerald-100/60 rounded-xl p-1 border border-emerald-200">
+          <div className="flex items-center justify-between bg-emerald-100/70 rounded-xl p-1 border border-[#008d36]/30">
             <button
               onClick={handleDecrease}
-              className="w-8 h-8 rounded-lg bg-white text-emerald-900 hover:bg-emerald-200 flex items-center justify-center font-bold shadow-xs active:scale-90 transition"
+              className="w-8 h-8 rounded-lg bg-white text-[#001b69] hover:bg-emerald-200 flex items-center justify-center font-bold shadow-xs active:scale-90 transition"
               title="Diminuir"
             >
               <Minus className="w-4 h-4" />
             </button>
 
-            <span className="text-xs font-black text-emerald-950 px-2">
+            <span className="text-xs font-black text-[#001b69] px-2">
               {formatQuantityStr(currentQty, activeUnit)}
             </span>
 
             <button
               onClick={handleIncrease}
-              className="w-8 h-8 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 flex items-center justify-center font-bold shadow-xs active:scale-90 transition"
+              className="w-8 h-8 rounded-lg bg-[#008d36] text-white hover:bg-[#00732d] flex items-center justify-center font-bold shadow-xs active:scale-90 transition"
               title="Aumentar"
             >
               <Plus className="w-4 h-4" />
@@ -170,9 +170,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         ) : (
           <button
             onClick={handleIncrease}
-            className="w-full py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-xs active:scale-98"
+            className="w-full py-2 px-3 rounded-xl bg-[#001b69] hover:bg-[#00134f] text-white text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-xs active:scale-98"
           >
-            <Plus className="w-4 h-4 text-emerald-400" />
+            <Plus className="w-4 h-4 text-[#f1b500]" />
             <span>Adicionar à Lista</span>
           </button>
         )}

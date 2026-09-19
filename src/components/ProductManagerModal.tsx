@@ -144,14 +144,14 @@ export const ProductManagerModal: React.FC<ProductManagerModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="p-4 sm:p-5 bg-slate-900 text-white flex items-center justify-between">
+        <div className="p-4 sm:p-5 bg-[#001b69] text-white flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-indigo-600/30 text-indigo-400 border border-indigo-500/20">
-              <Package className="w-6 h-6" />
+            <div className="p-2.5 rounded-2xl bg-[#001248] text-sky-300 border border-[#002888]">
+              <Package className="w-6 h-6 text-[#f1b500]" />
             </div>
             <div>
               <h2 className="font-bold text-lg sm:text-xl leading-tight">Cadastrar e Editar Produtos</h2>
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-sky-200">
                 Gerencie o catálogo de produtos exibidos no aplicativo ({products.length} cadastrados)
               </p>
             </div>
@@ -160,14 +160,14 @@ export const ProductManagerModal: React.FC<ProductManagerModalProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={handleOpenAddForm}
-              className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-md"
+              className="px-3.5 py-2 bg-[#008d36] hover:bg-[#00732d] text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-md"
             >
               <Plus className="w-4 h-4" />
               <span className="hidden sm:inline">Novo Produto</span>
             </button>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-full hover:bg-slate-800 text-white transition ml-1"
+              className="p-1.5 rounded-full hover:bg-[#001248] text-white transition ml-1"
             >
               <X className="w-6 h-6" />
             </button>
