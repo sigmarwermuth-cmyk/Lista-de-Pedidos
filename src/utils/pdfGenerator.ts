@@ -121,10 +121,10 @@ export function createFallbackPDFBlob(
   pdf.setTextColor(255, 255, 255);
   pdf.setFont('helvetica', 'bold');
   pdf.setFontSize(8);
-  pdf.text('OK', 17, currentY + 4.8);
-  pdf.text('Item / Produto', 30, currentY + 4.8);
-  pdf.text('Quantidade', 125, currentY + 4.8);
-  pdf.text('Observações', 160, currentY + 4.8);
+  pdf.text('Código', 16, currentY + 4.8);
+  pdf.text('Item / Produto', 55, currentY + 4.8);
+  pdf.text('Quantidade', 130, currentY + 4.8);
+  pdf.text('Observações', 165, currentY + 4.8);
 
   currentY += 7;
   pdf.setTextColor(15, 23, 42);
@@ -140,17 +140,15 @@ export function createFallbackPDFBlob(
       pdf.rect(14, currentY, 182, 6.5, 'F');
     }
 
-    // Checkbox square
-    pdf.setDrawColor(148, 163, 184);
-    pdf.rect(16.5, currentY + 1.2, 3.8, 3.8);
+    pdf.setFont('courier', 'bold');
+    pdf.text(item.barcode || '-', 16, currentY + 4.5);
 
-    const nameWithBarcode = item.barcode ? `${index + 1}. ${item.name} [${item.barcode}]` : `${index + 1}. ${item.name}`;
     pdf.setFont('helvetica', 'bold');
-    pdf.text(nameWithBarcode, 30, currentY + 4.5);
+    pdf.text(`${index + 1}. ${item.name}`, 55, currentY + 4.5);
     pdf.setFont('helvetica', 'bold');
-    pdf.text(formatQuantityStr(item.quantity, item.unit), 125, currentY + 4.5);
+    pdf.text(formatQuantityStr(item.quantity, item.unit), 130, currentY + 4.5);
     pdf.setFont('helvetica', 'normal');
-    pdf.text(item.note || '-', 160, currentY + 4.5);
+    pdf.text(item.note || '-', 165, currentY + 4.5);
 
     pdf.setDrawColor(226, 232, 240);
     pdf.line(14, currentY + 6.5, 196, currentY + 6.5);

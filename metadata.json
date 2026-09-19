@@ -1,6 +1,6 @@
 {
-  "name": "Lista de Pedidos para Impressão",
-  "description": "Sistema para montagem de lista de produtos de hortifruti e mercado para envio e impressão.",
+  "name": "Pedidos Hortifruti",
+  "description": "Sistema para montagem e separação de listas de pedidos de Hortifruti.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

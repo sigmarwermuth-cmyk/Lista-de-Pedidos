@@ -145,7 +145,7 @@ export function saveDraftCustomer(customer: CustomerDetails): void {
 }
 
 export const DEFAULT_APP_SETTINGS: AppSettings = {
-  companyName: 'Hortifruti & Distribuidora de Produtos',
+  companyName: 'Pedidos Hortifruti',
   whatsappNumber: '5549999501606',
   headerSubtitle: 'Montador de Lista para Separação e Impressão',
   printInstructions: 'Verifique os itens colhidos na lista e marque a caixa ao separar.',
@@ -155,6 +155,9 @@ export async function getStoredAppSettingsAsync(): Promise<AppSettings> {
   const parsed = await getIndexedDB<AppSettings>(APP_SETTINGS_STORAGE_KEY, DEFAULT_APP_SETTINGS);
   if (parsed.whatsappNumber === '5511999998888' || parsed.whatsappNumber === '5549998043552' || !parsed.whatsappNumber) {
     parsed.whatsappNumber = '5549999501606';
+  }
+  if (!parsed.companyName || parsed.companyName.includes('CooperA1') || parsed.companyName.includes('Distribuidora')) {
+    parsed.companyName = 'Pedidos Hortifruti';
   }
   return { ...DEFAULT_APP_SETTINGS, ...parsed };
 }
@@ -166,6 +169,9 @@ export function getStoredAppSettings(): AppSettings {
       const parsed = JSON.parse(saved);
       if (parsed.whatsappNumber === '5511999998888' || parsed.whatsappNumber === '5549998043552' || !parsed.whatsappNumber) {
         parsed.whatsappNumber = '5549999501606';
+      }
+      if (!parsed.companyName || parsed.companyName.includes('CooperA1') || parsed.companyName.includes('Distribuidora')) {
+        parsed.companyName = 'Pedidos Hortifruti';
       }
       return { ...DEFAULT_APP_SETTINGS, ...parsed };
     }

@@ -144,7 +144,7 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
             <table className="w-full border-collapse text-left text-[12px]">
               <thead>
                 <tr className="bg-slate-900 text-white font-bold text-[12px] uppercase print:bg-slate-900 print:text-white">
-                  <th className="py-0.5 px-1.5 w-9 text-center border border-slate-900">OK</th>
+                  <th className="py-0.5 px-2 w-32 border border-slate-900">Código</th>
                   <th className="py-0.5 px-2 border border-slate-900">Item / Produto</th>
                   <th className="py-0.5 px-2 w-28 text-center border border-slate-900">Quantidade</th>
                   <th className="py-0.5 px-2 border border-slate-900">Observações</th>
@@ -156,18 +156,11 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
                     key={item.id} 
                     className={index % 2 === 0 ? 'bg-white' : 'bg-slate-50/70'}
                   >
-                    <td className="py-0.5 px-1.5 text-center border border-slate-300 font-bold">
-                      <div className="w-3.5 h-3.5 border border-slate-400 rounded-2xs mx-auto flex items-center justify-center">
-                        <span className="text-[9px] text-slate-300">✓</span>
-                      </div>
+                    <td className="py-0.5 px-2 border border-slate-300 font-mono text-[11px] font-bold text-slate-800">
+                      {item.barcode || '-'}
                     </td>
                     <td className="py-0.5 px-2 border border-slate-300 font-bold text-slate-900 leading-tight">
                       {index + 1}. {item.name}
-                      {item.barcode && (
-                        <span className="ml-1.5 font-mono text-[10px] font-normal text-slate-600">
-                          [{item.barcode}]
-                        </span>
-                      )}
                     </td>
                     <td className="py-0.5 px-2 border border-slate-300 text-center font-extrabold text-slate-900 bg-slate-100/50 leading-tight">
                       {formatQuantityStr(item.quantity, item.unit)}
