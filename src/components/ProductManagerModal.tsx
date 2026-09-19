@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Plus, Search, Edit2, Trash2, RotateCcw, Package, Check, AlertCircle } from 'lucide-react';
 import { Product, ProductCategory, UnitType } from '../types';
 
@@ -10,6 +10,7 @@ interface ProductManagerModalProps {
   onUpdateProduct: (product: Product) => void;
   onDeleteProduct: (productId: string) => void;
   onResetProducts: () => void;
+  initialEditingProduct?: Product | null;
 }
 
 const CATEGORY_LABELS: Record<ProductCategory, string> = {
@@ -36,6 +37,7 @@ export const ProductManagerModal: React.FC<ProductManagerModalProps> = ({
   onUpdateProduct,
   onDeleteProduct,
   onResetProducts,
+  initialEditingProduct,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory>('todos');
@@ -51,6 +53,19 @@ export const ProductManagerModal: React.FC<ProductManagerModalProps> = ({
   const [formStep, setFormStep] = useState<number>(1);
   const [formIcon, setFormIcon] = useState('📦');
   const [formError, setFormError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isOpen && initialEditingProduct) {
+      setEditingProduct(initialEditingProduct);
+      setFormName(initialEditingProduct.name);
+      setFormCategory(initialEditingProduct.category);
+      setFormUnit(initialEditingProduct.unit);
+      setFormStep(initialEditingProduct.step || 1);
+      setFormIcon(initialEditingProduct.icon || '📦');
+      setFormError(null);
+      setIsFormOpen(true);
+    }
+  }, [isOpen, initialEditingProduct]);
 
   if (!isOpen) return null;
 

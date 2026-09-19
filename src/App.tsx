@@ -90,7 +90,18 @@ export default function App() {
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isProductManagerOpen, setIsProductManagerOpen] = useState(false);
+  const [editingProductForModal, setEditingProductForModal] = useState<Product | null>(null);
   const [savedListsHistory, setSavedListsHistory] = useState<SavedOrderList[]>(getStoredOrderLists());
+
+  const handleOpenProductManager = () => {
+    setEditingProductForModal(null);
+    setIsProductManagerOpen(true);
+  };
+
+  const handleQuickEditProduct = (prod: Product) => {
+    setEditingProductForModal(prod);
+    setIsProductManagerOpen(true);
+  };
 
   // Toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -309,7 +320,7 @@ export default function App() {
         setSearchTerm={setSearchTerm}
         onOpenPrint={handleOpenPrintModal}
         onOpenHistory={() => setIsHistoryOpen(true)}
-        onOpenProductManager={() => setIsProductManagerOpen(true)}
+        onOpenProductManager={handleOpenProductManager}
         onClearList={handleClearList}
       />
 
@@ -359,6 +370,7 @@ export default function App() {
                       listItem={listItem}
                       onUpdateQuantity={handleUpdateProductQuantity}
                       onUpdateNote={handleUpdateNote}
+                      onEditProduct={handleQuickEditProduct}
                     />
                   );
                 })}
@@ -441,6 +453,7 @@ export default function App() {
         onUpdateProduct={handleUpdateProduct}
         onDeleteProduct={handleDeleteProduct}
         onResetProducts={handleResetProducts}
+        initialEditingProduct={editingProductForModal}
       />
 
       <OfflineIndicator />

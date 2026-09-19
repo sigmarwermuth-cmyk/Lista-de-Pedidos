@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Minus, Check, MessageSquare } from 'lucide-react';
+import { Plus, Minus, MessageSquare, Edit2 } from 'lucide-react';
 import { Product, OrderListItem } from '../types';
 import { formatQuantityStr } from '../utils/whatsapp';
 
@@ -8,6 +8,7 @@ interface ProductCardProps {
   listItem?: OrderListItem;
   onUpdateQuantity: (product: Product, quantity: number, unit?: string, note?: string) => void;
   onUpdateNote: (product: Product, note: string) => void;
+  onEditProduct?: (product: Product) => void;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -15,6 +16,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   listItem,
   onUpdateQuantity,
   onUpdateNote,
+  onEditProduct,
 }) => {
   const currentQty = typeof listItem?.quantity === 'number' ? listItem.quantity : 0;
   const [selectedUnit, setSelectedUnit] = useState<string>(product.unit || 'kg');
@@ -54,18 +56,30 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div 
-      className={`bg-white rounded-2xl border p-4 shadow-xs transition-all flex flex-col justify-between ${
+      className={`bg-white rounded-2xl border p-4 shadow-xs transition-all flex flex-col justify-between relative group ${
         currentQty > 0
           ? 'border-emerald-500 ring-2 ring-emerald-500/10 bg-emerald-50/20'
           : 'border-slate-200 hover:border-slate-300'
       }`}
     >
       <div>
-        {/* Top Icon & Unit Selector Toggle (kg / un) */}
-        <div className="flex items-start justify-between gap-2 mb-2">
-          <span className="text-3xl p-2 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
-            {product.icon || '📦'}
-          </span>
+        {/* Top Icon & Unit Selector Toggle (kg / un) + Edit Quick Button */}
+        <div className="flex items-start justify-between gap-1.5 mb-2">
+          <div className="flex items-center gap-2">
+            <span className="text-3xl p-2 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
+              {product.icon || '📦'}
+            </span>
+            {onEditProduct && (
+              <button
+                type="button"
+                onClick={() => onEditProduct(product)}
+                className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition"
+                title="Editar este produto"
+              >
+                <Edit2 className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
           
           <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 shadow-2xs">
             {availableUnits.map((u) => {
