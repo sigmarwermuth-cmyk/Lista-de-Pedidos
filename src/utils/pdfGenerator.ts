@@ -76,9 +76,12 @@ export function createFallbackPDFBlob(
 
   // Header Title
   pdf.setFont('helvetica', 'bold');
-  pdf.setFontSize(14);
+  pdf.setFontSize(13);
   pdf.setTextColor(0, 27, 105); // CooperA1 Blue
-  pdf.text('LISTA DE PEDIDO DE PRODUTOS', 14, 16);
+  const customerNameUpper = customerDetails.name && customerDetails.name.trim() !== '' && customerDetails.name !== 'Não informado'
+    ? ` - ${customerDetails.name.trim().toUpperCase()}`
+    : '';
+  pdf.text(`LISTA DE PEDIDOS${customerNameUpper}`, 14, 16);
 
   // Divider
   pdf.setDrawColor(0, 27, 105);

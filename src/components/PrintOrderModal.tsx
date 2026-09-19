@@ -33,12 +33,16 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
       setIsGeneratingPdf(true);
       setPdfMessage(null);
 
+      const cleanCustomerName = customerDetails.name && customerDetails.name.trim() !== '' && customerDetails.name !== 'Não informado'
+        ? `_${customerDetails.name.trim().replace(/[^a-zA-Z0-9]/g, '_')}`
+        : '';
+
       const result = await shareOrDownloadPDF(
         'printable-order-sheet',
         customerDetails,
         items,
         appSettings.companyName,
-        'Lista_de_Pedido.pdf'
+        `Lista_de_Pedido${cleanCustomerName}.pdf`
       );
 
       if (result.downloaded) {
@@ -130,15 +134,40 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
           id="printable-order-sheet"
           className="p-4 sm:p-6 overflow-y-auto bg-white text-slate-900 font-sans print:p-0 print:overflow-visible printable-sheet text-[12px]"
         >
-          {/* Top Bar with Total Count */}
+          {/* Top Bar with Total Count & Customer Name */}
           <div className="border-b-2 border-[#001b69] pb-1.5 mb-2 flex items-center justify-between gap-3">
             <h2 className="text-[14px] font-black tracking-tight text-[#001b69]">
               Lista de Pedidos
+              {customerDetails.name && customerDetails.name.trim() !== '' && customerDetails.name !== 'Não informado' ? (
+                <span className="text-slate-900 font-bold ml-1.5">
+                  - {customerDetails.name.trim()}
+                </span>
+              ) : null}
             </h2>
-            <div className="text-right text-[12px] font-black text-[#001b69] uppercase">
+            <div className="text-right text-[12px] font-black text-[#001b69] uppercase shrink-0">
               Total: {items.length} {items.length === 1 ? 'item' : 'itens'}
             </div>
           </div>
+
+          {/* Compact Customer Details Line (Phone / Address / Delivery Date) */}
+          {((customerDetails.phone && customerDetails.phone.trim() !== '' && customerDetails.phone !== 'Não informado') ||
+            (customerDetails.address && customerDetails.address.trim() !== '') ||
+            (customerDetails.deliveryDate && customerDetails.deliveryDate.trim() !== '')) && (
+            <div className="mb-2 pb-1 border-b border-slate-200 text-[11px] text-slate-700 flex flex-wrap gap-x-4 gap-y-0.5">
+              {customerDetails.phone && customerDetails.phone.trim() !== '' && customerDetails.phone !== 'Não informado' && (
+                <span><strong className="font-semibold text-slate-900">Fone:</strong> {customerDetails.phone.trim()}</span>
+              )}
+              {customerDetails.deliveryType === 'delivery' && customerDetails.address && customerDetails.address.trim() !== '' && (
+                <span><strong className="font-semibold text-slate-900">Entrega:</strong> {customerDetails.address.trim()}</span>
+              )}
+              {customerDetails.deliveryType === 'pickup' && (
+                <span className="font-semibold text-slate-800">Retirada no Local</span>
+              )}
+              {customerDetails.deliveryDate && customerDetails.deliveryDate.trim() !== '' && (
+                <span><strong className="font-semibold text-slate-900">Data/Horário:</strong> {customerDetails.deliveryDate.trim()}</span>
+              )}
+            </div>
+          )}
 
 
           {/* Items Table for Separator / Picker */}
