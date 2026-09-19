@@ -86,6 +86,7 @@ export function getWhatsAppUrl(phone: string, text: string): string {
 }
 
 import { getIndexedDB, setIndexedDB } from './indexedDBStorage';
+import { OBSOLETE_PRODUCT_NAMES } from './productsStorage';
 
 // Storage helpers
 const ORDERS_LIST_STORAGE_KEY = 'pedidos_impressao_lists_v2';
@@ -94,13 +95,22 @@ const DRAFT_ITEMS_STORAGE_KEY = 'pedidos_impressao_draft_items_v2';
 const DRAFT_CUSTOMER_STORAGE_KEY = 'pedidos_impressao_draft_customer_v2';
 
 export async function getStoredDraftItemsAsync(): Promise<OrderListItem[]> {
-  return await getIndexedDB<OrderListItem[]>(DRAFT_ITEMS_STORAGE_KEY, []);
+  const items = await getIndexedDB<OrderListItem[]>(DRAFT_ITEMS_STORAGE_KEY, []);
+  if (Array.isArray(items)) {
+    return items.filter(item => !OBSOLETE_PRODUCT_NAMES.has(item.name.toLowerCase().trim()));
+  }
+  return [];
 }
 
 export function getStoredDraftItems(): OrderListItem[] {
   try {
     const saved = localStorage.getItem(DRAFT_ITEMS_STORAGE_KEY);
-    if (saved) return JSON.parse(saved);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        return parsed.filter(item => !OBSOLETE_PRODUCT_NAMES.has(item.name.toLowerCase().trim()));
+      }
+    }
   } catch (e) {
     console.error('Error reading draft items:', e);
   }
