@@ -59,6 +59,10 @@ export const CATALOG_PRODUCTS: Product[] = [
   { id: 'l18', name: 'Tomate Saladete', category: 'legumes', unit: 'kg', step: 1, minQty: 1, icon: '🍅' },
 
   // --- LATICÍNIOS & OVOS ---
+  { id: 'lat8', name: 'Creme de Leite Piracanjuba', category: 'laticinios', unit: 'unid', step: 1, minQty: 1, icon: '🥛' },
+  { id: 'lat9', name: 'Creme de Leite Zero Lactose', category: 'laticinios', unit: 'unid', step: 1, minQty: 1, icon: '🥛' },
+  { id: 'lat10', name: 'Leite Condensado Piracanjuba', category: 'laticinios', unit: 'unid', step: 1, minQty: 1, icon: '🥫' },
+  { id: 'lat11', name: 'Leite Condensado Zero Lactose', category: 'laticinios', unit: 'unid', step: 1, minQty: 1, icon: '🥫' },
   { id: 'lat3', name: 'Leite Integral 1L', category: 'laticinios', unit: 'L', step: 1, minQty: 1, icon: '🥛' },
   { id: 'lat7', name: 'Manteiga Extra', category: 'laticinios', unit: 'unid', step: 1, minQty: 1, icon: '🧈' },
   { id: 'lat2', name: 'Ovos Brancos (Cartela 30 un)', category: 'laticinios', unit: 'pct', step: 1, minQty: 1, icon: '🥚' },
@@ -91,6 +95,7 @@ export const CATALOG_PRODUCTS: Product[] = [
   { id: 'm14', name: 'Ketchup Hemmer (750g)', category: 'mercearia', unit: 'unid', step: 1, minQty: 1, icon: '🍅' },
   { id: 'm8', name: 'Macarrão Espaguete (500g)', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🍝' },
   { id: 'm15', name: 'Maionese Hellmans 1kg', category: 'mercearia', unit: 'unid', step: 1, minQty: 1, icon: '🥪' },
+  { id: 'm16', name: 'Mostarda Oderich Sachê', category: 'mercearia', unit: 'unid', step: 1, minQty: 1, icon: '🟡' },
   { id: 'm5', name: 'Óleo de Soja (900ml)', category: 'mercearia', unit: 'unid', step: 1, minQty: 1, icon: '🧴' },
   { id: 'm9', name: 'Polvilho Klauck (500g)', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🥣' },
 
@@ -107,4 +112,5 @@ export const CATALOG_PRODUCTS: Product[] = [
   { id: 'lim1', name: 'Detergente Líquido (500ml)', category: 'limpeza', unit: 'unid', step: 1, minQty: 1, icon: '🧼' },
   { id: 'lim4', name: 'Papel Higiênico (Pacote c/ 12)', category: 'limpeza', unit: 'pct', step: 1, minQty: 1, icon: '🧻' },
   { id: 'lim2', name: 'Sabão em Pó (1kg)', category: 'limpeza', unit: 'pct', step: 1, minQty: 1, icon: '🧼' },
+  { id: 'lim5', name: 'Tira-Manchas Girando Sol 2L', category: 'limpeza', unit: 'unid', step: 1, minQty: 1, icon: '✨' },
 ];

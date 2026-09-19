@@ -301,9 +301,12 @@ export default function App() {
       const prodName = normalize(prod.name);
       const prodCategory = normalize(prod.category);
       const prodBarcode = prod.barcode ? normalize(prod.barcode) : '';
+      const cleanProdName = prodName.replace(/[\s-_]/g, '');
+      const cleanTerm = term.replace(/[\s-_]/g, '');
 
       const matchesSearch =
         prodName.includes(term) ||
+        (cleanTerm.length >= 3 && cleanProdName.includes(cleanTerm)) ||
         prodCategory.includes(term) ||
         prodBarcode.includes(term);
 
