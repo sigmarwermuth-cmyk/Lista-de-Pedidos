@@ -21,7 +21,7 @@ export const CATALOG_PRODUCTS: Product[] = [
   { id: 'f25', name: 'Manga Tommy', category: 'frutas', unit: 'kg', step: 1, minQty: 1, icon: '🥭' },
   { id: 'f16', name: 'Maracujá Suco', category: 'frutas', unit: 'kg', step: 1, minQty: 1, icon: '💛' },
   { id: 'f10', name: 'Melancia Inteira', category: 'frutas', unit: 'unid', step: 1, minQty: 1, icon: '🍉' },
-  { id: 'f11', name: 'Melão Amarelo', category: 'frutas', unit: 'unid', step: 1, minQty: 1, icon: '🍈' },
+  { id: 'f11', name: 'Melão Kg', category: 'frutas', unit: 'kg', step: 1, minQty: 1, icon: '🍈' },
   { id: 'f12', name: 'Morangos (Bandeja)', category: 'frutas', unit: 'pct', step: 1, minQty: 1, icon: '🍓' },
   { id: 'f22', name: 'Uva Colonial', category: 'frutas', unit: 'kg', step: 1, minQty: 1, icon: '🍇' },
   { id: 'f13', name: 'Uva Niágara', category: 'frutas', unit: 'pct', step: 1, minQty: 1, icon: '🍇' },

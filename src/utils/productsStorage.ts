@@ -42,6 +42,9 @@ function mergeCatalogWithStored(stored: Product[]): Product[] {
       if (lower === 'cebola branca') {
         return { ...p, name: 'Cebola' };
       }
+      if (lower === 'melão amarelo' || lower === 'melao amarelo') {
+        return { ...p, name: 'Melão Kg', unit: 'kg' as const };
+      }
       return p;
     });
 
