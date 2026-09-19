@@ -290,13 +290,22 @@ export default function App() {
 
   // --- FILTERED PRODUCTS ---
   const filteredProducts = useMemo(() => {
+    const normalize = (str: string) =>
+      str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+    const term = normalize(searchTerm);
+
     return products.filter((prod) => {
-      const term = searchTerm.toLowerCase();
+      if (term === '') {
+        return selectedCategory === 'todos' || prod.category === selectedCategory;
+      }
+      const prodName = normalize(prod.name);
+      const prodCategory = normalize(prod.category);
+      const prodBarcode = prod.barcode ? normalize(prod.barcode) : '';
+
       const matchesSearch =
-        searchTerm === '' ||
-        prod.name.toLowerCase().includes(term) ||
-        prod.category.toLowerCase().includes(term) ||
-        (prod.barcode && prod.barcode.toLowerCase().includes(term));
+        prodName.includes(term) ||
+        prodCategory.includes(term) ||
+        prodBarcode.includes(term);
 
       const matchesCat =
         selectedCategory === 'todos' || prod.category === selectedCategory;

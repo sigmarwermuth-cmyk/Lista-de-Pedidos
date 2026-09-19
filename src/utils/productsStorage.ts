@@ -18,13 +18,32 @@ const OBSOLETE_PRODUCT_NAMES = new Set([
   'pera willians',
   'alface lisa',
   'banana caturra / nanica',
+  'alface americana',
+  'abobrinha italiana',
+  'maracujá azedo',
+  'maracuja azedo',
 ]);
 
 function mergeCatalogWithStored(stored: Product[]): Product[] {
-  // Filter out deprecated removed default items from previous cache
-  const cleanedStored = stored.filter(
-    (p) => !OBSOLETE_PRODUCT_NAMES.has(p.name.toLowerCase().trim())
-  );
+  // Filter out deprecated removed default items from previous cache and apply renames
+  const cleanedStored = stored
+    .filter((p) => !OBSOLETE_PRODUCT_NAMES.has(p.name.toLowerCase().trim()))
+    .map((p) => {
+      const lower = p.name.toLowerCase().trim();
+      if (lower === 'arroz chinês' || lower === 'arroz chines') {
+        return { ...p, name: 'Arroz Chinês (5kg)' };
+      }
+      if (lower === 'farinha de trigo marx 0000') {
+        return { ...p, name: 'Farinha de Trigo Marx 0000 5kg' };
+      }
+      if (lower === 'brócolis ninja' || lower === 'brocolis ninja') {
+        return { ...p, name: 'Brócolis Unidade' };
+      }
+      if (lower === 'cebola branca') {
+        return { ...p, name: 'Cebola' };
+      }
+      return p;
+    });
 
   const existingIds = new Set(cleanedStored.map((p) => p.id));
   const existingNames = new Set(cleanedStored.map((p) => p.name.toLowerCase().trim()));
