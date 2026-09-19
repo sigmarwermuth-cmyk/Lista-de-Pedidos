@@ -26,25 +26,33 @@ export function generateWhatsAppOrderList(
   const lines: string[] = [];
 
   lines.push(`📝 *LISTA DE PEDIDOS*`);
-  if (companyName) {
-    lines.push(`🏢 *Para:* ${companyName.toUpperCase()}`);
-  }
-  lines.push(`📅 *Data do Pedido:* ${new Date().toLocaleDateString('pt-BR')} ${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`);
+  lines.push(`📅 *Data:* ${new Date().toLocaleDateString('pt-BR')} ${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`);
   lines.push(`─────────────────────────`);
-  lines.push(`👤 *Cliente:* ${customerDetails.name || 'Não informado'}`);
-  lines.push(`📱 *Telefone/Zap:* ${customerDetails.phone || 'Não informado'}`);
-  if (customerDetails.deliveryType === 'delivery') {
+
+  const hasName = customerDetails.name && customerDetails.name.trim() !== '' && customerDetails.name !== 'Não informado';
+  const hasPhone = customerDetails.phone && customerDetails.phone.trim() !== '' && customerDetails.phone !== 'Não informado';
+  const hasAddress = customerDetails.address && customerDetails.address.trim() !== '';
+  const hasDate = customerDetails.deliveryDate && customerDetails.deliveryDate.trim() !== '';
+
+  if (hasName) {
+    lines.push(`👤 *Cliente:* ${customerDetails.name.trim()}`);
+  }
+  if (hasPhone) {
+    lines.push(`📱 *Telefone:* ${customerDetails.phone.trim()}`);
+  }
+  if (hasAddress) {
     lines.push(`🚚 *Tipo:* Entrega em Domicílio`);
-    if (customerDetails.address) {
-      lines.push(`📍 *Endereço:* ${customerDetails.address}`);
-    }
-  } else {
+    lines.push(`📍 *Endereço:* ${customerDetails.address.trim()}`);
+  } else if (customerDetails.deliveryType === 'pickup' && hasName) {
     lines.push(`🏬 *Tipo:* Retirada no Local`);
   }
-  if (customerDetails.deliveryDate) {
-    lines.push(`⏰ *Data/Horário Desejado:* ${customerDetails.deliveryDate}`);
+  if (hasDate) {
+    lines.push(`⏰ *Data/Horário Desejado:* ${customerDetails.deliveryDate.trim()}`);
   }
-  lines.push(`─────────────────────────`);
+
+  if (hasName || hasPhone || hasAddress || hasDate) {
+    lines.push(`─────────────────────────`);
+  }
 
   lines.push(`📋 *PRODUTOS DA LISTA (${items.length} ITENS):*`);
   items.forEach((item, idx) => {
@@ -193,4 +201,25 @@ export function saveOrderListToHistory(orderList: SavedOrderList): void {
     console.error('Error saving order list history:', e);
   }
 }
+
+export function deleteOrderListFromHistory(id: string): SavedOrderList[] {
+  try {
+    const current = getStoredOrderLists();
+    const updated = current.filter(item => item.id !== id);
+    setIndexedDB(ORDERS_LIST_STORAGE_KEY, updated);
+    return updated;
+  } catch (e) {
+    console.error('Error deleting order list history item:', e);
+    return [];
+  }
+}
+
+export function clearAllOrderListsHistory(): void {
+  try {
+    setIndexedDB(ORDERS_LIST_STORAGE_KEY, []);
+  } catch (e) {
+    console.error('Error clearing order lists history:', e);
+  }
+}
+
 

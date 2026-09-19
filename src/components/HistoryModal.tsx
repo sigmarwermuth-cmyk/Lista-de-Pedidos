@@ -1,13 +1,14 @@
-import React from 'react';
-import { X, History, Printer, Send, Calendar, CheckCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, History, Calendar, Trash2 } from 'lucide-react';
 import { SavedOrderList } from '../types';
-import { formatQuantityStr, generateWhatsAppOrderList, getWhatsAppUrl } from '../utils/whatsapp';
 
 interface HistoryModalProps {
   isOpen: boolean;
   lists: SavedOrderList[];
   onClose: () => void;
   onLoadList: (list: SavedOrderList) => void;
+  onDeleteList: (id: string) => void;
+  onClearAll: () => void;
 }
 
 export const HistoryModal: React.FC<HistoryModalProps> = ({
@@ -15,7 +16,11 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
   lists,
   onClose,
   onLoadList,
+  onDeleteList,
+  onClearAll,
 }) => {
+  const [confirmClearAll, setConfirmClearAll] = useState(false);
+
   if (!isOpen) return null;
 
   return (
@@ -31,17 +36,55 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
             <div>
               <h2 className="font-bold text-lg leading-tight">Histórico de Pedidos Salvos</h2>
               <p className="text-xs text-slate-300">
-                Listas geradas e salvas neste navegador
+                {lists.length} {lists.length === 1 ? 'pedido salvo' : 'pedidos salvos'}
               </p>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-slate-800 text-white transition"
-          >
-            <X className="w-6 h-6" />
-          </button>
+          <div className="flex items-center gap-2">
+            {lists.length > 0 && (
+              <button
+                onClick={() => setConfirmClearAll(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/20 text-red-300 hover:bg-red-500 hover:text-white rounded-xl text-xs font-semibold transition"
+                title="Limpar Todo o Histórico"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                Limpar Tudo
+              </button>
+            )}
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-full hover:bg-slate-800 text-white transition"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
         </div>
+
+        {/* Confirmation Banner for Clear All */}
+        {confirmClearAll && (
+          <div className="bg-red-50 p-4 border-b border-red-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-red-900 text-xs">
+            <span className="font-semibold text-center sm:text-left">
+              Tem certeza que deseja apagar TODO o histórico? Esta ação não pode ser desfeita.
+            </span>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => {
+                  onClearAll();
+                  setConfirmClearAll(false);
+                }}
+                className="px-3 py-1.5 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition"
+              >
+                Sim, Apagar Tudo
+              </button>
+              <button
+                onClick={() => setConfirmClearAll(false)}
+                className="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold rounded-lg hover:bg-slate-300 transition"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* List Content */}
         <div className="p-4 sm:p-6 overflow-y-auto space-y-3 flex-1">
@@ -57,9 +100,9 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
             lists.map((order) => (
               <div
                 key={order.id}
-                className="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-2 hover:border-slate-300 transition"
+                className="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-2 hover:border-slate-300 transition group relative"
               >
-                <div className="flex items-center justify-between text-xs text-slate-500 border-b border-slate-200 pb-2">
+                <div className="flex items-center justify-between text-xs text-slate-500 border-b border-slate-200 pb-2 pr-8">
                   <span className="font-bold text-slate-900">
                     Cliente: {order.customerDetails.name || 'Não informado'}
                   </span>
@@ -69,12 +112,21 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                   </span>
                 </div>
 
-                <div className="text-xs text-slate-700 font-medium">
+                <div className="text-xs text-slate-700 font-medium pr-8">
                   {order.items.length} itens: {order.items.slice(0, 4).map(i => i.name).join(', ')}
                   {order.items.length > 4 && '...'}
                 </div>
 
-                <div className="pt-2 flex justify-end gap-2">
+                <div className="pt-2 flex items-center justify-between gap-2">
+                  <button
+                    onClick={() => onDeleteList(order.id)}
+                    className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition flex items-center gap-1 text-xs font-semibold"
+                    title="Excluir este pedido do histórico"
+                  >
+                    <Trash2 className="w-4 h-4 text-red-500" />
+                    <span className="hidden sm:inline">Excluir</span>
+                  </button>
+
                   <button
                     onClick={() => {
                       onLoadList(order);
@@ -93,3 +145,4 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
     </div>
   );
 };
+

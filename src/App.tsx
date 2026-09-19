@@ -22,6 +22,8 @@ import {
   getStoredAppSettings, 
   getStoredOrderLists, 
   saveOrderListToHistory,
+  deleteOrderListFromHistory,
+  clearAllOrderListsHistory,
   getStoredDraftItems,
   saveDraftItems,
   getStoredDraftCustomer,
@@ -241,6 +243,18 @@ export default function App() {
     showToast('Lista carregada com sucesso na tela! 📋');
   };
 
+  const handleDeleteHistoryList = (id: string) => {
+    const updated = deleteOrderListFromHistory(id);
+    setSavedListsHistory(updated);
+    showToast('Pedido removido do histórico!');
+  };
+
+  const handleClearAllHistory = () => {
+    clearAllOrderListsHistory();
+    setSavedListsHistory([]);
+    showToast('Histórico limpo com sucesso!');
+  };
+
   // --- FILTERED PRODUCTS ---
   const filteredProducts = useMemo(() => {
     return products.filter((prod) => {
@@ -415,6 +429,8 @@ export default function App() {
         lists={savedListsHistory}
         onClose={() => setIsHistoryOpen(false)}
         onLoadList={handleLoadSavedList}
+        onDeleteList={handleDeleteHistoryList}
+        onClearAll={handleClearAllHistory}
       />
 
       <ProductManagerModal

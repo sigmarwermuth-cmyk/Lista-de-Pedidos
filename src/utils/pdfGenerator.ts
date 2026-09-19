@@ -94,24 +94,33 @@ export function createFallbackPDFBlob(
 
   // Customer & Order Information
   pdf.setFontSize(9);
-  pdf.setFont('helvetica', 'bold');
   pdf.setTextColor(15, 23, 42);
-  pdf.text(`Cliente: ${customerDetails.name || 'Não informado'}`, 14, 30);
-  pdf.setFont('helvetica', 'normal');
-  pdf.text(`Telefone: ${customerDetails.phone || 'Não informado'}`, 14, 35);
-  pdf.text(`Tipo: ${customerDetails.deliveryType === 'delivery' ? 'Entrega em Domicílio' : 'Retirada no Local'}`, 14, 40);
 
-  let currentY = 40;
-  if (customerDetails.address) {
+  let currentY = 28;
+  if (customerDetails.name && customerDetails.name.trim() !== '' && customerDetails.name !== 'Não informado') {
+    pdf.setFont('helvetica', 'bold');
+    pdf.text(`Cliente: ${customerDetails.name.trim()}`, 14, currentY);
     currentY += 5;
-    pdf.text(`Endereço: ${customerDetails.address}`, 14, currentY);
   }
-  if (customerDetails.deliveryDate) {
+  if (customerDetails.phone && customerDetails.phone.trim() !== '' && customerDetails.phone !== 'Não informado') {
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(`Telefone: ${customerDetails.phone.trim()}`, 14, currentY);
     currentY += 5;
-    pdf.text(`Data/Horário: ${customerDetails.deliveryDate}`, 14, currentY);
+  }
+  if (customerDetails.address && customerDetails.address.trim() !== '') {
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(`Tipo: Entrega em Domicílio`, 14, currentY);
+    currentY += 5;
+    pdf.text(`Endereço: ${customerDetails.address.trim()}`, 14, currentY);
+    currentY += 5;
+  }
+  if (customerDetails.deliveryDate && customerDetails.deliveryDate.trim() !== '') {
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(`Data/Horário: ${customerDetails.deliveryDate.trim()}`, 14, currentY);
+    currentY += 5;
   }
 
-  currentY += 8;
+  currentY += 3;
 
   // Items Table Header
   pdf.setFillColor(15, 23, 42);
