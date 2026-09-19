@@ -128,14 +128,16 @@ export const ProductManagerModal: React.FC<ProductManagerModalProps> = ({
     setIsFormOpen(false);
   };
 
-  const filteredProducts = products.filter((p) => {
-    const matchesCategory = selectedCategory === 'todos' || p.category === selectedCategory;
-    const term = searchTerm.toLowerCase();
-    const matchesSearch =
-      p.name.toLowerCase().includes(term) ||
-      (p.barcode && p.barcode.toLowerCase().includes(term));
-    return matchesCategory && matchesSearch;
-  });
+  const filteredProducts = products
+    .filter((p) => {
+      const matchesCategory = selectedCategory === 'todos' || p.category === selectedCategory;
+      const term = searchTerm.toLowerCase();
+      const matchesSearch =
+        p.name.toLowerCase().includes(term) ||
+        (p.barcode && p.barcode.toLowerCase().includes(term));
+      return matchesCategory && matchesSearch;
+    })
+    .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR', { sensitivity: 'base' }));
 
   if (!isOpen) return null;
 

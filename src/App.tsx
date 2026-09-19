@@ -294,7 +294,7 @@ export default function App() {
       str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
     const term = normalize(searchTerm);
 
-    return products.filter((prod) => {
+    const list = products.filter((prod) => {
       if (term === '') {
         return selectedCategory === 'todos' || prod.category === selectedCategory;
       }
@@ -312,6 +312,8 @@ export default function App() {
 
       return matchesSearch && matchesCat;
     });
+
+    return list.sort((a, b) => a.name.localeCompare(b.name, 'pt-BR', { sensitivity: 'base' }));
   }, [products, selectedCategory, searchTerm]);
 
   // Counts map

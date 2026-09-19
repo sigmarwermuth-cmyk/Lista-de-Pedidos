@@ -51,7 +51,22 @@ function mergeCatalogWithStored(stored: Product[]): Product[] {
     (cp) => !existingIds.has(cp.id) && !existingNames.has(cp.name.toLowerCase().trim())
   );
 
-  const result = [...cleanedStored, ...missing];
+  const categoryOrder: Record<string, number> = {
+    frutas: 1,
+    verduras: 2,
+    legumes: 3,
+    laticinios: 4,
+    acougue: 5,
+    mercearia: 6,
+    bebidas: 7,
+    limpeza: 8,
+  };
+
+  const result = [...cleanedStored, ...missing].sort((a, b) => {
+    const catDiff = (categoryOrder[a.category] ?? 99) - (categoryOrder[b.category] ?? 99);
+    if (catDiff !== 0) return catDiff;
+    return a.name.localeCompare(b.name, 'pt-BR', { sensitivity: 'base' });
+  });
   if (cleanedStored.length !== stored.length || missing.length > 0) {
     saveStoredProductsAsync(result);
   }
