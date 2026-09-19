@@ -31,9 +31,9 @@ export const CategoryNav: React.FC<CategoryNavProps> = ({
   itemsCountMap,
 }) => {
   return (
-    <div className="bg-white border-b border-slate-200 py-3 shadow-xs sticky top-[100px] sm:top-[72px] z-20 print:hidden">
+    <div className="sticky top-[100px] sm:top-[72px] z-20 print:hidden bg-white/85 backdrop-blur-md border-b border-slate-200/80 py-2.5 sm:py-3 shadow-xs transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1 scroll-smooth">
+        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-0.5 scroll-smooth">
           {CATEGORIES.map((cat) => {
             const isSelected = selectedCategory === cat.id;
             const count = itemsCountMap[cat.id] || 0;
@@ -45,7 +45,7 @@ export const CategoryNav: React.FC<CategoryNavProps> = ({
                 className={`relative whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 shrink-0 active:scale-95 ${
                   isSelected
                     ? 'bg-[#001b69] text-white shadow-md border border-[#001b69]'
-                    : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200/80'
+                    : 'bg-white/80 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/80 shadow-2xs'
                 }`}
               >
                 <span className="text-base relative z-10">{cat.icon}</span>
@@ -55,7 +55,7 @@ export const CategoryNav: React.FC<CategoryNavProps> = ({
                     className={`relative z-10 px-1.5 py-0.5 text-[10px] font-extrabold rounded-full ${
                       isSelected
                         ? 'bg-[#f1b500] text-slate-950'
-                        : 'bg-slate-200 text-slate-700'
+                        : 'bg-slate-200/80 text-slate-700'
                     }`}
                   >
                     {count}
