@@ -3,7 +3,7 @@ import { Product } from '../types';
 export const CATALOG_PRODUCTS: Product[] = [
   // --- FRUTAS ---
   { id: 'f1', name: 'Banana Prata', category: 'frutas', unit: 'kg', step: 1, minQty: 1, icon: '🍌' },
-  { id: 'f2', name: 'Banana Caturra / Nanica', category: 'frutas', unit: 'kg', step: 1, minQty: 1, icon: '🍌' },
+  { id: 'f2', name: 'Banana Caturra', category: 'frutas', unit: 'kg', step: 1, minQty: 1, icon: '🍌' },
   { id: 'f3', name: 'Maçã Gala', category: 'frutas', unit: 'kg', step: 1, minQty: 1, icon: '🍎' },
   { id: 'f4', name: 'Maçã Fuji', category: 'frutas', unit: 'kg', step: 1, minQty: 1, icon: '🍎' },
   { id: 'f5', name: 'Mamão Formosa', category: 'frutas', unit: 'kg', step: 1, minQty: 1, icon: '🥭' },
@@ -18,28 +18,21 @@ export const CATALOG_PRODUCTS: Product[] = [
   { id: 'f14', name: 'Uva Sem Semente', category: 'frutas', unit: 'pct', step: 1, minQty: 1, icon: '🍇' },
   { id: 'f15', name: 'Manga Palmer', category: 'frutas', unit: 'kg', step: 1, minQty: 1, icon: '🥭' },
   { id: 'f16', name: 'Maracujá Azedo', category: 'frutas', unit: 'kg', step: 1, minQty: 1, icon: '💛' },
-  { id: 'f17', name: 'Pera Willians', category: 'frutas', unit: 'kg', step: 1, minQty: 1, icon: '🍐' },
   { id: 'f18', name: 'Abacate', category: 'frutas', unit: 'kg', step: 1, minQty: 1, icon: '🥑' },
 
   // --- VERDURAS ---
-  { id: 'v1', name: 'Alface Crespa', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🥬' },
-  { id: 'v2', name: 'Alface Lisa', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🥬' },
+  { id: 'v1', name: 'Alface', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🥬' },
   { id: 'v3', name: 'Alface Americana', category: 'verduras', unit: 'unid', step: 1, minQty: 1, icon: '🥬' },
   { id: 'v4', name: 'Rúcula', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🌿' },
-  { id: 'v5', name: 'Agrião', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🌿' },
   { id: 'v6', name: 'Couve Manteiga', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🥬' },
-  { id: 'v7', name: 'Cheiro Verde (Salsa e Cebolinha)', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🌱' },
-  { id: 'v8', name: 'Espinafre', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🍃' },
+  { id: 'v7', name: 'Tempero Verde', category: 'verduras', unit: 'maço', step: 1, minQty: 1, icon: '🌱' },
   { id: 'v9', name: 'Brócolis Ninja', category: 'verduras', unit: 'unid', step: 1, minQty: 1, icon: '🥦' },
   { id: 'v10', name: 'Couve-Flor', category: 'verduras', unit: 'unid', step: 1, minQty: 1, icon: '🥦' },
   { id: 'v11', name: 'Repolho Verde', category: 'verduras', unit: 'unid', step: 1, minQty: 1, icon: '🥬' },
   { id: 'v12', name: 'Repolho Roxo', category: 'verduras', unit: 'unid', step: 1, minQty: 1, icon: '🟣' },
 
   // --- LEGUMES ---
-  { id: 'l1', name: 'Tomate Italiano', category: 'legumes', unit: 'kg', step: 1, minQty: 1, icon: '🍅' },
-  { id: 'l2', name: 'Tomate Andréa / Salada', category: 'legumes', unit: 'kg', step: 1, minQty: 1, icon: '🍅' },
-  { id: 'l3', name: 'Tomate Cereja (Bandeja)', category: 'legumes', unit: 'pct', step: 1, minQty: 1, icon: '🍅' },
-  { id: 'l4', name: 'Batata Monalisa / Inglesa', category: 'legumes', unit: 'kg', step: 1, minQty: 1, icon: '🥔' },
+  { id: 'l4', name: 'Batata Monalisa', category: 'legumes', unit: 'kg', step: 1, minQty: 1, icon: '🥔' },
   { id: 'l5', name: 'Batata Doce', category: 'legumes', unit: 'kg', step: 1, minQty: 1, icon: '🍠' },
   { id: 'l6', name: 'Cenoura', category: 'legumes', unit: 'kg', step: 1, minQty: 1, icon: '🥕' },
   { id: 'l7', name: 'Cebola Branca', category: 'legumes', unit: 'kg', step: 1, minQty: 1, icon: '🧅' },
@@ -52,6 +45,8 @@ export const CATALOG_PRODUCTS: Product[] = [
   { id: 'l14', name: 'Pimentão Vermelho', category: 'legumes', unit: 'kg', step: 1, minQty: 1, icon: '🫑' },
   { id: 'l15', name: 'Pimentão Amarelo', category: 'legumes', unit: 'kg', step: 1, minQty: 1, icon: '🫑' },
   { id: 'l16', name: 'Beterraba', category: 'legumes', unit: 'kg', step: 1, minQty: 1, icon: '🔴' },
+  { id: 'l17', name: 'Tomate Longa Vida', category: 'legumes', unit: 'kg', step: 1, minQty: 1, icon: '🍅' },
+  { id: 'l18', name: 'Tomate Saladete', category: 'legumes', unit: 'kg', step: 1, minQty: 1, icon: '🍅' },
 
   // --- LATICÍNIOS & OVOS ---
   { id: 'lat1', name: 'Ovos Caipiras (Dúzia)', category: 'laticinios', unit: 'dz', step: 1, minQty: 1, icon: '🥚' },
@@ -81,11 +76,15 @@ export const CATALOG_PRODUCTS: Product[] = [
   { id: 'm6', name: 'Azeite de Oliva (500ml)', category: 'mercearia', unit: 'unid', step: 1, minQty: 1, icon: '🫒' },
   { id: 'm7', name: 'Farinha de Trigo (1kg)', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🌾' },
   { id: 'm8', name: 'Macarrão Espaguete (500g)', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🍝' },
+  { id: 'm9', name: 'Polvilho Klauck (500g)', category: 'mercearia', unit: 'pct', step: 1, minQty: 1, icon: '🥣' },
 
   // --- BEBIDAS ---
   { id: 'b1', name: 'Suco de Laranja Integral 1L', category: 'bebidas', unit: 'unid', step: 1, minQty: 1, icon: '🥤' },
   { id: 'b2', name: 'Água Mineral Sem Gás 1.5L', category: 'bebidas', unit: 'unid', step: 1, minQty: 1, icon: '💧' },
   { id: 'b3', name: 'Água com Gás 1.5L', category: 'bebidas', unit: 'unid', step: 1, minQty: 1, icon: '🫧' },
+  { id: 'b4', name: 'Cerveja Heineken', category: 'bebidas', unit: 'unid', step: 1, minQty: 1, icon: '🍺' },
+  { id: 'b5', name: 'Refrigerante Coca-Cola 2L', category: 'bebidas', unit: 'unid', step: 1, minQty: 1, icon: '🥤' },
+  { id: 'b6', name: 'Refrigerante Guaraná Antarctica 2L', category: 'bebidas', unit: 'unid', step: 1, minQty: 1, icon: '🥤' },
 
   // --- LIMPEZA ---
   { id: 'lim1', name: 'Detergente Líquido (500ml)', category: 'limpeza', unit: 'unid', step: 1, minQty: 1, icon: '🧼' },
