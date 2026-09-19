@@ -1,13 +1,11 @@
 import React from 'react';
-import { Search, Printer, History, PackagePlus, X } from 'lucide-react';
+import { Printer, History, PackagePlus } from 'lucide-react';
 import { AppSettings } from '../types';
 import { PWAInstallButton } from './PWAInstallButton';
 
 interface HeaderProps {
   appSettings: AppSettings;
   listCount: number;
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
   onOpenPrint: () => void;
   onOpenHistory: () => void;
   onOpenProductManager: () => void;
@@ -17,8 +15,6 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   appSettings,
   listCount,
-  searchTerm,
-  setSearchTerm,
   onOpenPrint,
   onOpenHistory,
   onOpenProductManager,
@@ -73,26 +69,6 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>Imprimir ({listCount})</span>
               </button>
             </div>
-          </div>
-
-          {/* Search Bar */}
-          <div className="relative flex-1 max-w-md">
-            <Search className="w-4 h-4 text-sky-300/80 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Buscar fruta, legume, verdura ou produto..."
-              className="w-full pl-10 pr-9 py-2 bg-[#001248] text-white placeholder-sky-200/60 border border-[#002888] focus:border-[#008d36] rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#008d36]"
-            />
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-sky-300 hover:text-white"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            )}
           </div>
 
           {/* Desktop Action Buttons */}

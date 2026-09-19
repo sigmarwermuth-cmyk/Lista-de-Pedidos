@@ -38,7 +38,7 @@ import {
   resetStoredProducts,
   loadStoredProductsAsync
 } from './utils/productsStorage';
-import { Sparkles, Printer, FileText } from 'lucide-react';
+import { Sparkles, Printer, FileText, Search, X } from 'lucide-react';
 
 export default function App() {
   // --- STATE WITH PERSISTENCE ---
@@ -330,8 +330,6 @@ export default function App() {
       <Header
         appSettings={appSettings}
         listCount={orderListItems.length}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
         onOpenPrint={handleOpenPrintModal}
         onOpenHistory={() => setIsHistoryOpen(true)}
         onOpenProductManager={handleOpenProductManager}
@@ -356,6 +354,46 @@ export default function App() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
           {/* Left / Main Column: Products Catalog Grid */}
           <div className="lg:col-span-2 space-y-4">
+            {/* Search Bar directly above products */}
+            <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200 shadow-sm print:hidden">
+              <label htmlFor="product-catalog-search" className="block text-xs font-bold text-[#001b69] uppercase tracking-wider mb-2 flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <Search className="w-4 h-4 text-[#008d36]" />
+                  <span>Buscar no Catálogo</span>
+                </span>
+                {searchTerm && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchTerm('')}
+                    className="text-xs text-slate-500 hover:text-slate-800 font-semibold underline normal-case"
+                  >
+                    Limpar busca
+                  </button>
+                )}
+              </label>
+              <div className="relative">
+                <Search className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  id="product-catalog-search"
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Digite fruta, legume, verdura ou código..."
+                  className="w-full pl-10 sm:pl-11 pr-10 py-2.5 sm:py-3 bg-slate-50 text-slate-900 placeholder-slate-400 border border-slate-300 focus:border-[#008d36] rounded-xl text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#008d36]/20 shadow-inner"
+                />
+                {searchTerm && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchTerm('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 bg-slate-200 p-1 rounded-full"
+                    title="Limpar busca"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+            </div>
+
             <div className="flex items-center justify-between border-b border-slate-200 pb-2.5 print:hidden">
               <h2 className="text-base sm:text-lg font-bold text-slate-900 uppercase tracking-tight flex items-center gap-2">
                 <span>Catálogo de Produtos</span>
