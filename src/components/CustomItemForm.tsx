@@ -33,7 +33,9 @@ export const CustomItemForm: React.FC<CustomItemFormProps> = ({ onAddCustomItem 
   };
 
   return (
-    <div className="bg-gradient-to-r from-[#001b69] via-[#00247a] to-[#001b69] text-white rounded-3xl p-5 shadow-lg border border-[#002c8f]">
+    <div 
+      className="bg-gradient-to-r from-[#001b69] via-[#00247a] to-[#001b69] text-white rounded-3xl p-5 shadow-lg border border-[#002c8f]"
+    >
       <div className="flex items-center gap-2 mb-3">
         <Sparkles className="w-5 h-5 text-[#f1b500]" />
         <h3 className="font-bold text-sm sm:text-base text-white">
@@ -80,7 +82,7 @@ export const CustomItemForm: React.FC<CustomItemFormProps> = ({ onAddCustomItem 
         <div>
           <button
             type="submit"
-            className="w-full h-full py-2.5 px-4 bg-[#008d36] hover:bg-[#00732d] text-white font-black text-xs sm:text-sm rounded-xl transition shadow-md flex items-center justify-center gap-1.5 active:scale-98"
+            className="w-full h-full py-2.5 px-4 bg-[#008d36] hover:bg-[#00732d] text-white font-black text-xs sm:text-sm rounded-xl transition shadow-md flex items-center justify-center gap-1.5 active:scale-95"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Inserir na Lista</span>

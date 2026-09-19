@@ -24,7 +24,10 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs animate-fade-in print:hidden">
+    <div 
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs print:hidden animate-fade-in"
+    >
       <div 
         className="bg-white w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[85vh] border border-slate-200 animate-scale-up"
         onClick={(e) => e.stopPropagation()}
@@ -44,7 +47,7 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
             {lists.length > 0 && (
               <button
                 onClick={() => setConfirmClearAll(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/20 text-red-200 hover:bg-red-500 hover:text-white rounded-xl text-xs font-semibold transition"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/20 text-red-200 hover:bg-red-500 hover:text-white rounded-xl text-xs font-semibold transition active:scale-95"
                 title="Limpar Todo o Histórico"
               >
                 <Trash2 className="w-3.5 h-3.5" />
@@ -53,32 +56,32 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
             )}
             <button
               onClick={onClose}
-              className="p-1.5 rounded-full hover:bg-[#001248] text-white transition"
+              className="p-1.5 rounded-full hover:bg-[#001248] text-white transition active:scale-90"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5" />
             </button>
           </div>
         </div>
 
         {/* Confirmation Banner for Clear All */}
         {confirmClearAll && (
-          <div className="bg-red-50 p-4 border-b border-red-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-red-900 text-xs">
+          <div className="bg-red-50 p-4 border-b border-red-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-red-900 text-xs overflow-hidden animate-fade-in">
             <span className="font-semibold text-center sm:text-left">
               Tem certeza que deseja apagar TODO o histórico? Esta ação não pode ser desfeita.
             </span>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={() => {
                   onClearAll();
                   setConfirmClearAll(false);
                 }}
-                className="px-3 py-1.5 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition"
+                className="px-3 py-1.5 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition active:scale-95"
               >
                 Sim, Apagar Tudo
               </button>
               <button
                 onClick={() => setConfirmClearAll(false)}
-                className="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold rounded-lg hover:bg-slate-300 transition"
+                className="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold rounded-lg hover:bg-slate-300 transition active:scale-95"
               >
                 Cancelar
               </button>
@@ -120,7 +123,7 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                 <div className="pt-2 flex items-center justify-between gap-2">
                   <button
                     onClick={() => onDeleteList(order.id)}
-                    className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition flex items-center gap-1 text-xs font-semibold"
+                    className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition flex items-center gap-1 text-xs font-semibold active:scale-95"
                     title="Excluir este pedido do histórico"
                   >
                     <Trash2 className="w-4 h-4 text-red-500" />
@@ -132,7 +135,7 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
                       onLoadList(order);
                       onClose();
                     }}
-                    className="px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition"
+                    className="px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition shadow-xs active:scale-95"
                   >
                     Carregar Esta Lista na Tela
                   </button>

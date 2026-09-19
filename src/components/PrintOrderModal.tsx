@@ -61,10 +61,13 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/65 backdrop-blur-xs animate-fade-in overflow-y-auto">
+    <div 
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/65 backdrop-blur-xs overflow-y-auto print:p-0 print:bg-white print:static animate-fade-in"
+    >
       {/* Container */}
       <div 
-        className="bg-white w-full max-w-3xl rounded-3xl overflow-hidden shadow-2xl flex flex-col my-auto max-h-[92vh] border border-gray-200 animate-scale-up"
+        className="bg-white w-full max-w-3xl rounded-3xl overflow-hidden shadow-2xl flex flex-col my-auto max-h-[92vh] border border-gray-200 print:max-h-none print:shadow-none print:border-none print:rounded-none animate-scale-up"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Screen-Only Modal Header */}
@@ -72,7 +75,7 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
-              className="px-2.5 py-1.5 bg-[#001248] hover:bg-[#00185e] text-slate-200 hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1 border border-[#002888] shadow-xs"
+              className="px-2.5 py-1.5 bg-[#001248] hover:bg-[#00185e] text-slate-200 hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1 border border-[#002888] shadow-xs active:scale-95"
               title="Voltar para o aplicativo"
             >
               <ArrowLeft className="w-4 h-4 text-[#f1b500]" />
@@ -90,7 +93,7 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
             <button
               onClick={handleSendWhatsAppPDF}
               disabled={isGeneratingPdf}
-              className="px-2.5 sm:px-3 py-2 bg-[#008d36] hover:bg-[#00732d] disabled:opacity-50 text-white font-bold text-xs rounded-xl transition flex items-center gap-1 shadow-md"
+              className="px-2.5 sm:px-3 py-2 bg-[#008d36] hover:bg-[#00732d] disabled:opacity-50 text-white font-bold text-xs rounded-xl transition flex items-center gap-1 shadow-md active:scale-95"
             >
               {isGeneratingPdf ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -101,17 +104,16 @@ export const PrintOrderModal: React.FC<PrintOrderModalProps> = ({
             </button>
             <button
               onClick={handlePrint}
-              className="px-3 sm:px-3.5 py-2 bg-[#001248] hover:bg-[#00185e] text-white font-bold text-xs rounded-xl transition flex items-center gap-1 border border-[#002888] shadow-md"
+              className="px-3 sm:px-3.5 py-2 bg-[#001248] hover:bg-[#00185e] text-white font-bold text-xs rounded-xl transition flex items-center gap-1 border border-[#002888] shadow-md active:scale-95"
             >
               <Printer className="w-4 h-4 text-[#f1b500]" />
               <span className="hidden sm:inline">Imprimir</span>
             </button>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-full hover:bg-[#001248] text-sky-200 hover:text-white transition ml-1"
-              title="Fechar"
+              className="p-1.5 rounded-full hover:bg-[#001248] text-white transition active:scale-90"
             >
-              <X className="w-5 h-5 sm:w-6 sm:h-6" />
+              <X className="w-6 h-6" />
             </button>
           </div>
         </div>

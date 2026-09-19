@@ -16,6 +16,7 @@ interface OrderListSidebarProps {
   setCustomerDetails: (details: CustomerDetails) => void;
   appSettings: AppSettings;
   onUpdateQuantity: (id: string, delta: number) => void;
+  onSetQuantity?: (id: string, newQty: number | string) => void;
   onUpdateUnit?: (id: string, newUnit: string) => void;
   onRemoveItem: (id: string) => void;
   onClearList: () => void;
@@ -28,6 +29,7 @@ export const OrderListSidebar: React.FC<OrderListSidebarProps> = ({
   setCustomerDetails,
   appSettings,
   onUpdateQuantity,
+  onSetQuantity,
   onUpdateUnit,
   onRemoveItem,
   onClearList,
@@ -138,7 +140,7 @@ export const OrderListSidebar: React.FC<OrderListSidebarProps> = ({
               {items.map((item, idx) => (
                 <div
                   key={item.id}
-                  className="bg-white rounded-xl p-3 border border-slate-200 shadow-2xs flex items-center justify-between gap-2"
+                  className="bg-white rounded-xl p-3 border border-slate-200 shadow-2xs flex items-center justify-between gap-2 overflow-hidden animate-fade-in"
                 >
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5 flex-wrap">
@@ -193,25 +195,50 @@ export const OrderListSidebar: React.FC<OrderListSidebarProps> = ({
                   {/* Quantity controls */}
                   <div className="flex items-center gap-1 shrink-0">
                     <button
+                      type="button"
                       onClick={() => onUpdateQuantity(item.id, -1)}
-                      className="w-6 h-6 rounded bg-slate-100 text-slate-700 hover:bg-slate-200 flex items-center justify-center font-bold text-xs"
+                      className="w-6 h-6 rounded bg-slate-100 text-slate-700 hover:bg-slate-200 flex items-center justify-center font-bold text-xs shrink-0 active:scale-90 transition"
                     >
                       <Minus className="w-3 h-3" />
                     </button>
-                    <span className="text-xs font-extrabold px-1.5 text-[#001b69] min-w-[32px] text-center">
-                      {formatQuantityStr(item.quantity, item.unit)}
-                    </span>
+
+                    <input
+                      type="number"
+                      step="any"
+                      min="0"
+                      value={item.quantity}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === '') {
+                          if (onSetQuantity) onSetQuantity(item.id, '');
+                        } else {
+                          const parsed = parseFloat(val.replace(',', '.'));
+                          if (!isNaN(parsed) && onSetQuantity) {
+                            onSetQuantity(item.id, parsed);
+                          }
+                        }
+                      }}
+                      onBlur={(e) => {
+                        const parsed = parseFloat(e.target.value.replace(',', '.'));
+                        if (isNaN(parsed) || parsed <= 0) {
+                          onRemoveItem(item.id);
+                        }
+                      }}
+                      className="w-14 py-0.5 px-1 bg-slate-50 border border-slate-300 focus:border-[#001b69] focus:bg-white rounded font-extrabold text-xs text-[#001b69] text-center focus:outline-none focus:ring-1 focus:ring-[#001b69]"
+                    />
+
                     <button
+                      type="button"
                       onClick={() => onUpdateQuantity(item.id, 1)}
-                      className="w-6 h-6 rounded bg-[#001b69] text-white hover:bg-[#00134f] flex items-center justify-center font-bold text-xs"
+                      className="w-6 h-6 rounded bg-[#001b69] text-white hover:bg-[#00134f] flex items-center justify-center font-bold text-xs shrink-0 active:scale-90 transition"
                     >
                       <Plus className="w-3 h-3" />
                     </button>
 
                     <button
                       onClick={() => onRemoveItem(item.id)}
-                      className="text-slate-400 hover:text-red-500 p-1 ml-1"
-                      title="Remover"
+                      className="p-1 text-slate-400 hover:text-red-600 rounded active:scale-90 transition"
+                      title="Remover item"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>

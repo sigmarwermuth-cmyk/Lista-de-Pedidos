@@ -42,17 +42,17 @@ export const CategoryNav: React.FC<CategoryNavProps> = ({
               <button
                 key={cat.id}
                 onClick={() => onSelectCategory(cat.id)}
-                className={`whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 shrink-0 ${
+                className={`relative whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 shrink-0 active:scale-95 ${
                   isSelected
-                    ? 'bg-[#001b69] text-white shadow-md scale-102 border border-[#001b69]'
+                    ? 'bg-[#001b69] text-white shadow-md border border-[#001b69]'
                     : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200/80'
                 }`}
               >
-                <span className="text-base">{cat.icon}</span>
-                <span>{cat.label}</span>
+                <span className="text-base relative z-10">{cat.icon}</span>
+                <span className="relative z-10">{cat.label}</span>
                 {count > 0 && cat.id !== 'todos' && (
                   <span
-                    className={`px-1.5 py-0.5 text-[10px] font-extrabold rounded-full ${
+                    className={`relative z-10 px-1.5 py-0.5 text-[10px] font-extrabold rounded-full ${
                       isSelected
                         ? 'bg-[#f1b500] text-slate-950'
                         : 'bg-slate-200 text-slate-700'

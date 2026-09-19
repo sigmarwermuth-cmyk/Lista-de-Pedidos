@@ -224,14 +224,24 @@ export default function App() {
       return prev
         .map((item) => {
           if (item.id === id) {
-            if (typeof item.quantity === 'number') {
-              const newQty = Math.max(0, item.quantity + delta);
-              return { ...item, quantity: Math.round(newQty * 100) / 100 };
-            }
+            const currentNumber = typeof item.quantity === 'number' ? item.quantity : (parseFloat(String(item.quantity)) || 0);
+            const newQty = Math.max(0, currentNumber + delta);
+            return { ...item, quantity: Math.round(newQty * 100) / 100 };
           }
           return item;
         })
         .filter((item) => typeof item.quantity !== 'number' || item.quantity > 0);
+    });
+  };
+
+  const handleSetQuantityById = (id: string, newQty: number | string) => {
+    setOrderListItems((prev) => {
+      return prev.map((item) => {
+        if (item.id === id) {
+          return { ...item, quantity: newQty };
+        }
+        return item;
+      });
     });
   };
 
@@ -320,8 +330,8 @@ export default function App() {
     <div className="min-h-screen bg-slate-100 font-sans text-slate-900 flex flex-col selection:bg-slate-900 selection:text-white">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl text-xs sm:text-sm font-bold flex items-center gap-2 animate-bounce border border-slate-700 print:hidden">
-          <Sparkles className="w-4 h-4 text-amber-400" />
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-[#001b69] text-white px-5 py-3 rounded-2xl shadow-2xl text-xs sm:text-sm font-bold flex items-center gap-2 border border-blue-900 print:hidden animate-fade-in">
+          <Sparkles className="w-4 h-4 text-[#f1b500]" />
           <span>{toastMessage}</span>
         </div>
       )}
@@ -438,6 +448,7 @@ export default function App() {
               setCustomerDetails={setCustomerDetails}
               appSettings={appSettings}
               onUpdateQuantity={handleUpdateQuantityById}
+              onSetQuantity={handleSetQuantityById}
               onUpdateUnit={handleUpdateUnitById}
               onRemoveItem={handleRemoveItemById}
               onClearList={handleClearList}

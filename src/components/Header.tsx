@@ -27,7 +27,9 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Logo & Company Title */}
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#008d36] text-white font-black text-2xl flex items-center justify-center shadow-lg shadow-[#008d36]/20">
+              <div 
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#008d36] text-white font-black text-2xl flex items-center justify-center shadow-lg shadow-[#008d36]/20 transition-transform active:scale-95"
+              >
                 📋
               </div>
               <div>
@@ -44,7 +46,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="flex md:hidden items-center gap-1.5">
               <button
                 onClick={onOpenHistory}
-                className="bg-[#001248] text-[#f1b500] font-bold px-2.5 py-2 rounded-xl text-xs flex items-center gap-1 border border-[#002888] active:scale-95"
+                className="bg-[#001248] text-[#f1b500] font-bold px-2.5 py-2 rounded-xl text-xs flex items-center gap-1 border border-[#002888] active:scale-95 transition"
                 title="Histórico de Pedidos"
               >
                 <History className="w-4 h-4" />
@@ -53,7 +55,7 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 onClick={onOpenProductManager}
-                className="bg-[#001248] text-sky-300 font-bold p-2 rounded-xl text-xs flex items-center justify-center border border-[#002888] active:scale-95"
+                className="bg-[#001248] text-sky-300 font-bold p-2 rounded-xl text-xs flex items-center justify-center border border-[#002888] active:scale-95 transition"
                 title="Cadastrar e Editar Produtos"
               >
                 <PackagePlus className="w-4 h-4" />
@@ -63,7 +65,7 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 onClick={onOpenPrint}
-                className="relative bg-[#008d36] hover:bg-[#00732d] text-white font-extrabold px-3 py-2 rounded-xl text-xs flex items-center gap-1 shadow-md active:scale-95"
+                className="relative bg-[#008d36] hover:bg-[#00732d] text-white font-extrabold px-3 py-2 rounded-xl text-xs flex items-center gap-1 shadow-md active:scale-95 transition"
               >
                 <Printer className="w-4 h-4" />
                 <span>Imprimir ({listCount})</span>
@@ -75,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="hidden md:flex items-center gap-2">
             <button
               onClick={onOpenProductManager}
-              className="px-3 py-2 text-xs font-semibold text-sky-100 hover:text-white bg-[#001248] hover:bg-[#00185e] rounded-xl border border-[#002888] transition flex items-center gap-1.5"
+              className="px-3 py-2 text-xs font-semibold text-sky-100 hover:text-white bg-[#001248] hover:bg-[#00185e] rounded-xl border border-[#002888] transition flex items-center gap-1.5 active:scale-95"
               title="Cadastrar, editar ou remover produtos do catálogo"
             >
               <PackagePlus className="w-4 h-4 text-sky-300" />
@@ -87,7 +89,7 @@ export const Header: React.FC<HeaderProps> = ({
             {listCount > 0 && (
               <button
                 onClick={onClearList}
-                className="px-3 py-2 text-xs font-semibold text-slate-200 hover:text-white bg-[#001248] hover:bg-[#00185e] rounded-xl border border-[#002888] transition"
+                className="px-3 py-2 text-xs font-semibold text-slate-200 hover:text-white bg-[#001248] hover:bg-[#00185e] rounded-xl border border-[#002888] transition active:scale-95"
                 title="Limpar todos os itens da lista atual"
               >
                 Nova Lista
@@ -96,7 +98,7 @@ export const Header: React.FC<HeaderProps> = ({
 
             <button
               onClick={onOpenHistory}
-              className="px-3 py-2 text-xs font-semibold text-[#f1b500] hover:text-amber-200 bg-[#001248] hover:bg-[#00185e] rounded-xl border border-[#002888] transition flex items-center gap-1.5"
+              className="px-3 py-2 text-xs font-semibold text-[#f1b500] hover:text-amber-200 bg-[#001248] hover:bg-[#00185e] rounded-xl border border-[#002888] transition flex items-center gap-1.5 active:scale-95"
             >
               <History className="w-4 h-4 text-[#f1b500]" />
               <span>Histórico</span>

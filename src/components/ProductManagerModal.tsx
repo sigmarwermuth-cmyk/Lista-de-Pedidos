@@ -137,13 +137,18 @@ export const ProductManagerModal: React.FC<ProductManagerModalProps> = ({
     return matchesCategory && matchesSearch;
   });
 
+  if (!isOpen) return null;
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/65 backdrop-blur-xs animate-fade-in overflow-y-auto print:hidden">
+    <div 
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/65 backdrop-blur-xs overflow-y-auto print:hidden animate-fade-in"
+    >
       <div 
-        className="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex flex-col my-auto max-h-[92vh] border border-gray-200"
+        className="bg-white w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex flex-col my-auto max-h-[92vh] border border-gray-200 animate-scale-up"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Modal Header */}
+            {/* Modal Header */}
         <div className="p-4 sm:p-5 bg-[#001b69] text-white flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-2xl bg-[#001248] text-sky-300 border border-[#002888]">
@@ -302,7 +307,7 @@ export const ProductManagerModal: React.FC<ProductManagerModalProps> = ({
           </span>
           <button
             onClick={onClose}
-            className="px-5 py-2 bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs rounded-xl transition"
+            className="px-5 py-2 bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs rounded-xl transition active:scale-95"
           >
             Fechar
           </button>
@@ -311,8 +316,14 @@ export const ProductManagerModal: React.FC<ProductManagerModalProps> = ({
 
       {/* INNER FORM MODAL (Add / Edit) */}
       {isFormOpen && (
-        <div className="fixed inset-0 z-60 flex items-center justify-center p-3 bg-black/75 backdrop-blur-xs animate-fade-in">
-          <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-5 border border-slate-200 animate-scale-up">
+        <div 
+          onClick={() => setIsFormOpen(false)}
+          className="fixed inset-0 z-60 flex items-center justify-center p-3 bg-black/75 backdrop-blur-xs animate-fade-in"
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-5 border border-slate-200 animate-scale-up"
+          >
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
               <h3 className="font-bold text-slate-900 text-base">
                 {editingProduct ? 'Editar Produto' : 'Cadastrar Novo Produto'}
@@ -403,7 +414,7 @@ export const ProductManagerModal: React.FC<ProductManagerModalProps> = ({
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1">
-                    Passo de Qtd. (Ex: 0.5)
+                    Passo de Qtd. (Ex: 1 ou 0.5)
                   </label>
                   <input
                     type="number"
